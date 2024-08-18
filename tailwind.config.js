@@ -5,6 +5,7 @@ module.exports = {
       fontFamily: {
         korean: ["NotoSansKR-Regular", "sans-serif"],
         main: ["DoHyeon-Regular", "sans-serif"],
+        number: ["Roboto-Regular", "sans-serif"],
       },
     },
   },

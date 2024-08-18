@@ -1,7 +1,8 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ScrollView } from "react-native";
 import MainTopBar from "../components/MainTopBar";
 import CategoryItem from "../components/CategoryItem";
 import MainSector from "../components/MainSector";
+import styles from "../styles/styles";
 
 //TODO: 백엔드에서 데이터를 가져와서 뿌릴지 아니면 이대로 사용할 지 얘기를 해봐야 할듯
 const CATEGORY_COLUMNS = 5;
@@ -39,7 +40,7 @@ const SECTOR_DATA = [
     parts: [
       { text: "주변에서 " },
       { text: "추천", color: "#D9DD3B" },
-      { text: "해주는 맛집\n을 만나보세요!" },
+      { text: "해주는\n 맛집을 만나보세요!" },
     ],
     src: require(`../../assets/images/3d/fire.png`),
     width: "50",
@@ -62,7 +63,7 @@ const SECTOR_DATA = [
   },
   {
     title: "음식 닮은꼴 AI 테스트",
-    parts: [{ text: "자신의 셀카를 업로드하고 닮은 음식\n을 알아보아요!" }],
+    parts: [{ text: "자신의 셀카를 업로드하고\n 닮은 음식을 알아보아요!" }],
     src: require(`../../assets/images/3d/camera.png`),
     width: "66.66",
   },
@@ -74,6 +75,7 @@ const SECTOR_DATA = [
       },
     ],
     src: require(`../../assets/images/3d/crow.png`),
+    isBig: true,
     width: "100",
   },
 ];
@@ -82,7 +84,10 @@ const HomeScreen = () => {
   return (
     <View>
       <MainTopBar />
-      <View className="mx-6">
+      <ScrollView
+        className="px-6 mt-[125px]"
+        showsVerticalScrollIndicator={false}
+      >
         <View
           style={{
             shadowRadius: 10,
@@ -92,8 +97,8 @@ const HomeScreen = () => {
           }}
           className="mt-5 mb-2"
         >
-          <View className="bg-white flex flex-col pt-[14px] pb-2 px-4 rounded-[10px]">
-            <Text className="mb-2 font-main text-lg text-[#111111]">
+          <View className="bg-white flex flex-col pt-[14px] pb-4 px-4 rounded-[10px]">
+            <Text className={`mb-2 ${styles("main")} text-[#111111]`}>
               메뉴 별 카테고리
             </Text>
             <FlatList
@@ -109,16 +114,19 @@ const HomeScreen = () => {
               keyExtractor={(_, idx) => idx.toString()}
               numColumns={CATEGORY_COLUMNS}
               scrollEnabled={false}
+              ItemSeparatorComponent={() => <View className="h-3" />}
             />
           </View>
         </View>
         <FlatList
+          className="mb-2"
           data={SECTOR_DATA}
           renderItem={({ item, index }) => (
             <MainSector
               title={item.title}
               parts={item.parts}
               src={item.src}
+              isBig={item.isBig}
               width={item.width}
               idx={index}
             />
@@ -127,7 +135,7 @@ const HomeScreen = () => {
           numColumns={SECTOR_COLUMNS}
           scrollEnabled={false}
         />
-      </View>
+      </ScrollView>
     </View>
   );
 };

@@ -12,7 +12,6 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaView className="flex-1">
       <NavigationContainer>
-        {/* <TopBar title="마이프로필" /> */}
         <TabBar />
       </NavigationContainer>
     </SafeAreaView>

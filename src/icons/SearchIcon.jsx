@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { Line, Circle } from "react-native-svg";
 
 const SearchIcon = ({ color = "#B0B0B0" }) => (
-  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+  <Svg width={28} height={28} viewBox="0 0 24 24" fill="none">
     <Line
       x1="15.7071"
       y1="14.2929"
