@@ -1,7 +1,5 @@
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-// TODO: apache라이센스로 github 파일에서 LICENCE.txt, README.txt로 표기하고 사용
 import HomeIcon from "../icons/HomeIcon";
 import SearchIcon from "../icons/SearchIcon";
 import BellIcon from "../icons/BellIcon";

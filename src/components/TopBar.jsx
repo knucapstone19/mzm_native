@@ -1,6 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
-// import BackIcon from "../../assets/images/icons/back.svg";
-// import MenuIcon from "../icons/MenuIcon";
+import { View, Text } from "react-native";
 import styles from "../styles/styles";
 
 const TopBar = ({ title }) => {

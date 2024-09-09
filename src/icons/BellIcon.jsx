@@ -1,5 +1,4 @@
-import React from "react";
-import Svg, { Path } from "react-native-svg";
+import { Svg, Path } from "react-native-svg";
 
 const HomeIcon = ({ color = "#B0B0B0" }) => (
   <Svg

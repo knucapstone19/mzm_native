@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import TopBar from "../components/TopBar";
+
 import WarningIcon from "../../assets/images/icons/warning.svg";
 import styles from "../styles/styles";
 

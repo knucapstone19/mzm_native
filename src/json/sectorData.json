@@ -1,0 +1,45 @@
+[
+  {
+    "title": "주변 추천 맛집",
+    "parts": [
+      { "text": "주변에서 " },
+      { "text": "추천", "color": "#D9DD3B" },
+      { "text": "해주는\n 맛집을 만나보세요!" }
+    ],
+    "src": "fire.png",
+    "width": "50"
+  },
+  {
+    "title": "맛집 리스트업",
+    "parts": [
+      { "text": "학교 주변에 있는" },
+      { "text": " 전체", "color": "#EC2222" },
+      { "text": "\n식당들을 만나보세요!" }
+    ],
+    "src": "file-text.png",
+    "width": "50"
+  },
+  {
+    "title": "음식 MBTI",
+    "parts": [{ "text": "당신의 음식\n취향은?" }],
+    "src": "heart.png",
+    "width": "33.33"
+  },
+  {
+    "title": "음식 닮은꼴 AI 테스트",
+    "parts": [{ "text": "자신의 셀카를 업로드하고\n 닮은 음식을 알아보아요!" }],
+    "src": "camera.png",
+    "width": "66.66"
+  },
+  {
+    "title": "음식 이상형 월드컵",
+    "parts": [
+      {
+        "text": "둘중 좋아하는 음식을 선택해서 가장\n좋아하는 음식을 알아보아요!"
+      }
+    ],
+    "src": "crow.png",
+    "isBig": true,
+    "width": "100"
+  }
+]
