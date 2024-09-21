@@ -21,7 +21,7 @@ const MainTopBar = () => {
           </Text>
         </View>
         <TouchableOpacity>
-          <MenuIcon color="#363636" />
+          <MenuIcon />
         </TouchableOpacity>
       </View>
       <SearchBar

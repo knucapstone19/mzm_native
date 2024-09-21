@@ -1,0 +1,19 @@
+[
+  {
+    "color": "#FAE100",
+    "src": "kakao.png",
+    "enterprise": "카카오"
+  },
+  {
+    "color": "#03C75A",
+    "textColor": "white",
+    "src": "naver.png",
+    "enterprise": "네이버"
+  },
+  {
+    "color": "#FFFFFF",
+    "borderColor": "#D3D3D3",
+    "src": "google.png",
+    "enterprise": "구글"
+  }
+]
