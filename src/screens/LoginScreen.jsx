@@ -1,4 +1,4 @@
-import { View, FlatList } from "react-native";
+import { View, FlatList, Platform, Alert, BackHandler } from "react-native";
 import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
@@ -18,7 +18,16 @@ const LoginScreen = () => {
 
   return (
     <View className="bg-white flex-1">
-      <TopBar isBack={true} />
+      <TopBar
+        isBack={true}
+        onPress={() => {
+          if (Platform.OS === "ios") {
+            Alert.alert("앱을 종료하려면 홈 버튼을 눌러주세요.", "");
+          } else {
+            BackHandler.exitApp();
+          }
+        }}
+      />
       <View className="items-center w-full px-6 pt-40 space-y-[120px]">
         <SplashLogo />
         <View className="w-full space-y-3">

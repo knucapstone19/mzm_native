@@ -3,7 +3,12 @@ import BackIcon from "../../assets/images/icons/back.svg";
 import MenuIcon from "../icons/MenuIcon";
 import styles from "../styles/styles";
 
-const TopBar = ({ title = null, isBack = false, isMenu = false }) => {
+const TopBar = ({
+  title = null,
+  isBack = false,
+  isMenu = false,
+  onPress = () => {},
+}) => {
   return (
     <View
       className={`bg-white flex-row ${
@@ -13,7 +18,7 @@ const TopBar = ({ title = null, isBack = false, isMenu = false }) => {
       }`}
     >
       {isBack && (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress} s>
           <BackIcon />
         </TouchableOpacity>
       )}
