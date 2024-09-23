@@ -1,8 +1,17 @@
-import { View, FlatList, Platform, Alert, BackHandler } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  FlatList,
+  Platform,
+  Alert,
+  BackHandler,
+  Modal,
+} from "react-native";
 import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
 import SocialData from "../json/socialData.json";
+import WebView from "react-native-webview";
 
 const SOCIAL_IMAGES = {
   "kakao.png": require("../../assets/images/social/kakao.png"),
@@ -11,6 +20,9 @@ const SOCIAL_IMAGES = {
 };
 
 const LoginScreen = () => {
+  const [showWebView, setShowWebView] = useState(false);
+  const [registrationId, setRegistrationId] = useState("");
+
   const socialData = SocialData.map((item) => ({
     ...item,
     src: SOCIAL_IMAGES[item.src],
@@ -40,6 +52,9 @@ const LoginScreen = () => {
                 borderColor={item?.borderColor}
                 src={item.src}
                 enterprise={item.enterprise}
+                registrationId={item.registrationId}
+                setShowWebView={setShowWebView}
+                setRegistrationId={setRegistrationId}
               />
             )}
             keyExtractor={(_, idx) => idx.toString()}
@@ -48,6 +63,38 @@ const LoginScreen = () => {
           />
         </View>
       </View>
+
+      <Modal
+        visible={showWebView}
+        onRequestClose={() => setShowWebView(false)} // WebView 닫기
+        animationType="slide"
+      >
+        <View className="flex-1">
+          <TopBar
+            isBack={true}
+            onPress={() => {
+              setShowWebView(false);
+            }}
+          />
+          <WebView
+            source={{
+              uri: `http://211.243.47.122:3005/oauth2/authorization/${registrationId}`,
+            }}
+            onNavigationStateChange={(navState) => {
+              console.log(navState.url);
+
+              if (
+                navState.url.includes(
+                  `http://211.243.47.122:3005/oauth2/code/${registrationId}`
+                )
+              ) {
+                setShowWebView(false);
+              }
+            }}
+            startInLoadingState={true}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };

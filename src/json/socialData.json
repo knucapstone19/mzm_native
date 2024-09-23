@@ -2,18 +2,21 @@
   {
     "color": "#FAE100",
     "src": "kakao.png",
-    "enterprise": "카카오"
+    "enterprise": "카카오",
+    "registrationId": "kakao"
   },
   {
     "color": "#03C75A",
     "textColor": "white",
     "src": "naver.png",
-    "enterprise": "네이버"
+    "enterprise": "네이버",
+    "registrationId": "naver"
   },
   {
     "color": "#FFFFFF",
     "borderColor": "#D3D3D3",
     "src": "google.png",
-    "enterprise": "구글"
+    "enterprise": "구글",
+    "registrationId": "google"
   }
 ]
