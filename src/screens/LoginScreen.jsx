@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -7,11 +7,13 @@ import {
   BackHandler,
   Modal,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import WebView from "react-native-webview";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
 import SocialData from "../json/socialData.json";
-import WebView from "react-native-webview";
 
 const SOCIAL_IMAGES = {
   "kakao.png": require("../../assets/images/social/kakao.png"),
@@ -19,14 +21,27 @@ const SOCIAL_IMAGES = {
   "google.png": require("../../assets/images/social/google.png"),
 };
 
+// TODO: 모달 컴포넌트 분리 및 함수 정리 필요
 const LoginScreen = () => {
   const [showWebView, setShowWebView] = useState(false);
   const [registrationId, setRegistrationId] = useState("");
+  const navigation = useNavigation();
 
   const socialData = SocialData.map((item) => ({
     ...item,
     src: SOCIAL_IMAGES[item.src],
   }));
+
+  useEffect(() => {
+    const hasToken = async () => {
+      const token = await AsyncStorage.getItem("@user_token");
+
+      if (token) {
+        navigation.replace("Main");
+      }
+    };
+    hasToken();
+  }, [showWebView]);
 
   return (
     <View className="bg-white flex-1">
@@ -80,15 +95,46 @@ const LoginScreen = () => {
             source={{
               uri: `http://211.243.47.122:3005/oauth2/authorization/${registrationId}`,
             }}
-            onNavigationStateChange={(navState) => {
-              console.log(navState.url);
-
+            onNavigationStateChange={async (navState) => {
               if (
-                navState.url.includes(
-                  `http://211.243.47.122:3005/oauth2/code/${registrationId}`
+                navState.url.startsWith(
+                  "http://localhost:5173/auth?access-token="
                 )
               ) {
+                const url = [...navState.url.split("?")];
+                url.shift();
+
+                const params = url[0].split("&");
+
+                for (let param of params) {
+                  if (param.startsWith("access-token")) {
+                    try {
+                      await AsyncStorage.setItem(
+                        "@user_token",
+                        param.split("=")[1]
+                      );
+                    } catch (e) {
+                      console.error("토큰 저장에 실패하였습니다.");
+                    }
+                  }
+                }
+
                 setShowWebView(false);
+
+                //get으로 사용자 유저정보 가져오기
+                // const token = await AsyncStorage.getItem("@user_token");
+                // try {
+                //   const res = await fetch("http://211.243.47.122:3005/user", {
+                //     method: "GET",
+                //     headers: {
+                //       Authorization: `Bearer ${token}`,
+                //     },
+                //   });
+                //   const data = await res.json();
+                //   console.log(data);
+                // } catch (e) {
+                //   console.error(e.message);
+                // }
               }
             }}
             startInLoadingState={true}
