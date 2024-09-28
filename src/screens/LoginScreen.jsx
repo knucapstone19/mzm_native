@@ -81,7 +81,7 @@ const LoginScreen = () => {
 
       <Modal
         visible={showWebView}
-        onRequestClose={() => setShowWebView(false)} // WebView 닫기
+        onRequestClose={() => setShowWebView(false)}
         animationType="slide"
       >
         <View className="flex-1">
