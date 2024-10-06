@@ -32,6 +32,18 @@
 		<false/>
 		<key>NSAllowsLocalNetworking</key>
 		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>211.243.47.122</key> 
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>

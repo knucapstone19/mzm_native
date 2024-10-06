@@ -90,7 +90,7 @@ const SchoolForm = () => {
           disabled={!inputSelect}
         >
           <Text className={`${styles("16-title")} text-center text-[#FFFFFF]`}>
-            다음
+            완료
           </Text>
         </TouchableOpacity>
       </View>
