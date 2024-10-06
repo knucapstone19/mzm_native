@@ -13,7 +13,7 @@ const TopBar = ({
     <View
       className={`bg-white flex-row ${
         !(isBack || isMenu) ? "justify-center" : "justify-between"
-      } items-center w-full px-6 py-[14px] ${
+      } items-center w-full h-14 px-6 ${
         title || isMenu ? "border-b-[1px] border-[#D3D3D3]" : null
       }`}
     >

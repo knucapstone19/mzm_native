@@ -3,6 +3,8 @@ import MainTopBar from "../ui/MainTopBar";
 import CategorySector from "../ui/CategorySector";
 import MainSector from "../components/MainSector";
 import SectorData from "../json/sectorData.json";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SECTOR_COLS = 2;
 const SECTOR_IMAGES = {
@@ -18,6 +20,29 @@ const HomeScreen = () => {
     ...item,
     src: SECTOR_IMAGES[item.src],
   }));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await AsyncStorage.getItem("@user_token");
+      let data = null;
+
+      if (token) {
+        try {
+          const res = await fetch("http://211.243.47.122:3005/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          data = await res.json();
+          console.log(data);
+        } catch (e) {
+          console.error(e.message);
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <View>

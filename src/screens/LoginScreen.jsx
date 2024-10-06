@@ -35,8 +35,26 @@ const LoginScreen = () => {
   useEffect(() => {
     const hasToken = async () => {
       const token = await AsyncStorage.getItem("@user_token");
+      let data = null;
 
       if (token) {
+        try {
+          const res = await fetch("http://211.243.47.122:3005/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          data = await res.json();
+          console.log(data);
+        } catch (e) {
+          console.error(e.message);
+        }
+      }
+
+      if (!data?.user.school && token) {
+        navigation.navigate("Nickname");
+      } else if (data?.user.school && token) {
         navigation.replace("Main");
       }
     };
@@ -120,21 +138,6 @@ const LoginScreen = () => {
                 }
 
                 setShowWebView(false);
-
-                //get으로 사용자 유저정보 가져오기
-                // const token = await AsyncStorage.getItem("@user_token");
-                // try {
-                //   const res = await fetch("http://211.243.47.122:3005/user", {
-                //     method: "GET",
-                //     headers: {
-                //       Authorization: `Bearer ${token}`,
-                //     },
-                //   });
-                //   const data = await res.json();
-                //   console.log(data);
-                // } catch (e) {
-                //   console.error(e.message);
-                // }
               }
             }}
             startInLoadingState={true}

@@ -2,7 +2,7 @@ import { useState, useRef, useImperativeHandle, forwardRef } from "react";
 import { View, TextInput } from "react-native";
 import SearchIcon from "../../assets/images/icons/search.svg";
 
-const SearchBar = ({ press = () => {}, focus = false, border = true }, ref) => {
+const SearchBar = ({ press = () => {}, border = true }, ref) => {
   const [searchText, setSearchText] = useState("");
   const localRef = useRef(null);
 
