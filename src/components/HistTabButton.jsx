@@ -3,7 +3,7 @@ import styles from "../styles/styles";
 
 const HistTabButton = ({ src, text }) => {
   return (
-    <TouchableOpacity className="flex-col items-center">
+    <TouchableOpacity className="flex-col items-center" activeOpacity={0.7}>
       <Image className="w-12 h-12" source={src} />
       <Text className={`mt-2 ${styles("14-text")} text-[#383838]`}>{text}</Text>
     </TouchableOpacity>

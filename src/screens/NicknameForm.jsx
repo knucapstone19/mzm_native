@@ -73,6 +73,7 @@ const NicknameForm = () => {
             {inputText ? (
               <TouchableOpacity
                 className="mr-2"
+                activeOpacity={0.7}
                 onPress={() => setInputText("")}
               >
                 <DeleteIcon />
@@ -89,6 +90,7 @@ const NicknameForm = () => {
           className={`${
             isDisabled ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
           }  py-3.5 rounded-[10px]`}
+          activeOpacity={0.7}
           onPress={async () => {
             try {
               await AsyncStorage.setItem("@user_name", inputText);

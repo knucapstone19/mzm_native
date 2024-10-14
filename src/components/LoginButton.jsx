@@ -17,6 +17,7 @@ const LoginButton = ({
       className={`flex-row justify-center py-[14px] space-x-2 rounded-[10px] ${
         borderColor ? `border-[1px] border-[${borderColor}]` : null
       }`}
+      activeOpacity={0.7}
       onPress={() => {
         setShowWebView(true);
         setRegistrationId(registrationId);

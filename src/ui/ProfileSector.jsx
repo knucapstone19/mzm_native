@@ -13,7 +13,7 @@ const ProfileSector = () => {
     >
       <View className="bg-white flex flex-col pt-[14px] pb-4 px-4 rounded-[10px]">
         <View className="flex-row items-center">
-          <TouchableOpacity className="mr-6">
+          <TouchableOpacity className="mr-6" activeOpacity={0.9}>
             <Image
               className="w-32 h-32"
               source={require("../../assets/images/profile.png")}
@@ -29,7 +29,10 @@ const ProfileSector = () => {
                 강남대
               </Text>
             </View>
-            <TouchableOpacity className="bg-[#FF8800] flex-row justify-center items-center px-4 py-2.5 rounded-full">
+            <TouchableOpacity
+              className="bg-[#FF8800] flex-row justify-center items-center px-4 py-2.5 rounded-full"
+              activeOpacity={0.7}
+            >
               <Text className={`${styles("14-text")} text-white`}>
                 프로필 수정
               </Text>

@@ -1,4 +1,8 @@
 const styleObj = {
+  "40-title":
+    "font-korean font-bold text-[40px] leading-[48px] tracking-[-0.8px]",
+  "24-title":
+    "font-korean font-bold text-2xl leading-[28.8px] tracking-[-0.48px]",
   "bold-20-title":
     "font-korean font-bold text-xl leading-[24px] tracking-[-0.4px]",
   "18-title":

@@ -20,7 +20,7 @@ const MainTopBar = () => {
             강남대
           </Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.7}>
           <MenuIcon />
         </TouchableOpacity>
       </View>

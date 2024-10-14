@@ -40,6 +40,7 @@ const SchoolForm = () => {
 
           <TouchableOpacity
             className="flex-row justify-between items-center px-4 py-3 border-[1px] border-[#D3D3D3] rounded-[10px]"
+            activeOpacity={0.7}
             onPress={() => modalizeRef.current?.open()}
           >
             <Text className={`${styles("16-text")} text-[#111111]`}>
@@ -52,6 +53,7 @@ const SchoolForm = () => {
           className={`${
             !inputSelect ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
           }  py-3.5 rounded-[10px]`}
+          activeOpacity={0.7}
           onPress={async () => {
             const token = await AsyncStorage.getItem("@user_token");
             const userName = await AsyncStorage.getItem("@user_name");
@@ -118,6 +120,7 @@ const SchoolForm = () => {
             <TouchableOpacity
               key={index}
               className="px-6 py-[17px]"
+              activeOpacity={0.7}
               onPress={() => {
                 setInputSelect(school);
                 modalizeRef.current?.close();

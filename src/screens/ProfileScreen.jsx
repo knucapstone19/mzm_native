@@ -33,7 +33,7 @@ const ProfileScreen = () => {
 
   return (
     <View>
-      <TopBar title="마이프로필" />
+      <TopBar title="마이프로필" bgColor={"white"} />
       <ScrollView
         className="px-6 mb-[50px]"
         overScrollMode="never"
@@ -53,6 +53,7 @@ const ProfileScreen = () => {
 
         <TouchableOpacity
           className="bg-[#FF8800] mt-10 mb-4 py-[11px] rounded-[10px]"
+          activeOpacity={0.7}
           onPress={async () => {
             await AsyncStorage.removeItem("@user_token");
             setIsLoggedOut(true);

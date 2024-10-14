@@ -8,6 +8,7 @@ const CategoryItem = ({ src, text, isSmall, idx, margin = 2 }) => {
       className={`flex flex-col items-center ${
         margin === 2 ? "mx-2" : "mx-2.5"
       }`}
+      activeOpacity={0.7}
       onPress={() => console.log(text)}
     >
       <View

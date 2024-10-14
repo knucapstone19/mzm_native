@@ -1,7 +1,10 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/styles";
 
 const MainSector = ({ title, parts, src, isBig, width, idx }) => {
+  const navigation = useNavigation();
+
   return (
     <View
       style={{ flexBasis: `${width}%` }}
@@ -12,10 +15,14 @@ const MainSector = ({ title, parts, src, isBig, width, idx }) => {
         style={{
           elevation: 1,
         }}
-        activeOpacity={1.0}
         className="bg-white h-[104px] px-4 pt-[14px] pb-3 relative overflow-hidden rounded-[10px]"
+        activeOpacity={0.9}
         // FIXME: navigation 기능 수정 (임의로 로그 출력)
-        onPress={() => console.log(`${title} 눌러짐`)}
+        onPress={() => {
+          if (title === "음식 MBTI") {
+            navigation.navigate("MbtiTest");
+          }
+        }}
       >
         <View className="flex-row">
           <View className="flex-col z-10">
