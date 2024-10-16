@@ -19,7 +19,9 @@ const SchoolForm = () => {
       const res = await fetch("http://211.243.47.122:3005/school");
       const data = await res.json();
 
-      setSchoolData(data.map(({ schoolName }) => schoolName));
+      setSchoolData(
+        data.map(({ schoolId, schoolName }) => [schoolId, schoolName])
+      );
     };
 
     try {
@@ -44,7 +46,7 @@ const SchoolForm = () => {
             onPress={() => modalizeRef.current?.open()}
           >
             <Text className={`${styles("16-text")} text-[#111111]`}>
-              {inputSelect ? inputSelect : "학교를 선택해주세요!"}
+              {inputSelect ? inputSelect[1] : "학교를 선택해주세요!"}
             </Text>
             <SelectIcon />
           </TouchableOpacity>
@@ -64,22 +66,20 @@ const SchoolForm = () => {
             // PUT 메서드 만들어지면 다시 테스트
             try {
               const res = await fetch("http://211.243.47.122:3005/user", {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  user: {
-                    name: userName,
-                    school: inputSelect,
-                  },
+                  username: userName,
+                  schoolId: inputSelect[0],
                 }),
               });
 
-              if (!res.ok) {
-                throw new Error("서버 응답이 올바르지 않습니다.");
-              }
+              // if (!res.ok) {
+              //   throw new Error("서버 응답이 올바르지 않습니다.");
+              // }
 
               const result = await res.json();
               console.log("업데이트된 유저 정보:", result);
@@ -127,7 +127,7 @@ const SchoolForm = () => {
               }}
             >
               <Text className={`${styles("16-text")} text-[#111111]`}>
-                {school}
+                {school[1]}
               </Text>
             </TouchableOpacity>
           ))}

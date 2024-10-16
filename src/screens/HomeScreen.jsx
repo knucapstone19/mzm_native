@@ -21,28 +21,29 @@ const HomeScreen = () => {
     src: SECTOR_IMAGES[item.src],
   }));
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const token = await AsyncStorage.getItem("@user_token");
-  //     let data = null;
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = await AsyncStorage.getItem("@user_token");
+      let data = null;
 
-  //     if (token) {
-  //       try {
-  //         const res = await fetch("http://211.243.47.122:3005/user", {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         data = await res.json();
-  //         console.log(data);
-  //       } catch (e) {
-  //         console.error(e.message);
-  //       }
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+      if (token) {
+        try {
+          console.log(token);
+          const res = await fetch("http://211.243.47.122:3005/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          data = await res.json();
+          console.log(data);
+        } catch (e) {
+          console.error(e.message);
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <View>
