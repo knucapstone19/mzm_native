@@ -9,6 +9,7 @@ import SchoolForm from "./screens/SchoolForm";
 import TabBar from "./ui/TabBar";
 import MbtiTestScreen from "./screens/MbtiTestScreen";
 import MbtiResScreen from "./screens/MbtiResScreen";
+import ProfileModScreen from "./screens/ProfileModScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,7 @@ const App = () => {
           <Stack.Screen name="Main" component={TabBar} />
           <Stack.Screen name="MbtiTest" component={MbtiTestScreen} />
           <Stack.Screen name="MbtiRes" component={MbtiResScreen} />
+          <Stack.Screen name="ProfileMod" component={ProfileModScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

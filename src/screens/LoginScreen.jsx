@@ -46,7 +46,7 @@ const LoginScreen = () => {
             },
           });
           data = await res.json();
-          console.log(data);
+          // console.log(data);
         } catch (e) {
           console.error(e.message);
         }

@@ -24,11 +24,7 @@ const TopBar = ({
         </TouchableOpacity>
       )}
       <Text className={`${styles("18-title")} text-[#111111]`}>{title}</Text>
-      {isMenu && (
-        <TouchableOpacity activeOpacity={0.7}>
-          <MenuIcon />
-        </TouchableOpacity>
-      )}
+      {title && isBack && <View className="w-[28px] h-[28px]"></View>}
     </View>
   );
 };

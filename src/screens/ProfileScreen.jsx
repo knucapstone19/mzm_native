@@ -33,7 +33,7 @@ const ProfileScreen = () => {
 
   return (
     <View>
-      <TopBar title="마이프로필" bgColor={"white"} />
+      <TopBar title="마이프로필" bgColor="white" />
       <ScrollView
         className="px-6 mb-[50px]"
         overScrollMode="never"

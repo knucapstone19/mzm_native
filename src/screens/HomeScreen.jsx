@@ -28,7 +28,6 @@ const HomeScreen = () => {
 
       if (token) {
         try {
-          console.log(token);
           const res = await fetch("http://211.243.47.122:3005/user", {
             method: "GET",
             headers: {
@@ -36,7 +35,7 @@ const HomeScreen = () => {
             },
           });
           data = await res.json();
-          console.log(data);
+          // console.log(data);
         } catch (e) {
           console.error(e.message);
         }

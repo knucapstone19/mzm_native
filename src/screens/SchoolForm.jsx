@@ -59,11 +59,7 @@ const SchoolForm = () => {
           onPress={async () => {
             const token = await AsyncStorage.getItem("@user_token");
             const userName = await AsyncStorage.getItem("@user_name");
-            console.log(token);
-            console.log(userName);
-            console.log(inputSelect);
 
-            // PUT 메서드 만들어지면 다시 테스트
             try {
               const res = await fetch("http://211.243.47.122:3005/user", {
                 method: "PATCH",
@@ -77,9 +73,9 @@ const SchoolForm = () => {
                 }),
               });
 
-              // if (!res.ok) {
-              //   throw new Error("서버 응답이 올바르지 않습니다.");
-              // }
+              if (!res.ok) {
+                throw new Error("서버 응답이 올바르지 않습니다.");
+              }
 
               const result = await res.json();
               console.log("업데이트된 유저 정보:", result);
