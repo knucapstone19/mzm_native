@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import WebView from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
 import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
@@ -32,34 +33,80 @@ const LoginScreen = () => {
     src: SOCIAL_IMAGES[item.src],
   }));
 
-  useEffect(() => {
-    const hasToken = async () => {
-      const token = await AsyncStorage.getItem("@user_token");
-      let data = null;
-
-      if (token) {
-        try {
-          const res = await fetch("http://211.243.47.122:3005/user", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          data = await res.json();
-          // console.log(data);
-        } catch (e) {
-          console.error(e.message);
-        }
+  let isNavigating = false;
+  const checkNavigation = async (token) => {
+    let data = null;
+    if (token) {
+      try {
+        const res = await fetch("http://211.243.47.122:3005/user", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        data = await res.json();
+      } catch (e) {
+        console.error(e.message);
       }
+    }
 
+    try {
       if (!data?.user.school && token) {
         navigation.navigate("Nickname");
       } else if (data?.user.school && token) {
         navigation.replace("Main");
       }
+    } finally {
+      isNavigating = false;
+    }
+  };
+
+  const handleNavigation = async (navState) => {
+    if (navState.url.startsWith("http://localhost:5173/auth?access-token=")) {
+      if (isNavigating) return;
+      isNavigating = true;
+
+      const url = [...navState.url.split("?")];
+      url.shift();
+
+      let token = null;
+      const params = url[0].split("&");
+      for (let param of params) {
+        if (param.startsWith("access-token")) {
+          try {
+            token = param.split("=")[1];
+            await AsyncStorage.setItem("@user_token", param.split("=")[1]);
+          } catch (e) {
+            console.error("토큰 저장에 실패하였습니다.");
+          }
+        }
+      }
+
+      checkNavigation(token);
+      setShowWebView(false);
+    }
+  };
+
+  useEffect(() => {
+    const hasToken = async () => {
+      const token = await AsyncStorage.getItem("@user_token");
+      const id = await AsyncStorage.getItem("@registration_id");
+
+      setRegistrationId(id);
+
+      if (token) {
+        const { exp } = jwtDecode(token);
+        const now = Math.floor(Date.now() / 1000);
+
+        if (now < exp) {
+          checkNavigation(token);
+        } else {
+          setShowWebView(true);
+        }
+      }
     };
     hasToken();
-  }, [showWebView]);
+  }, []);
 
   return (
     <View className="bg-white flex-1">
@@ -113,33 +160,7 @@ const LoginScreen = () => {
             source={{
               uri: `http://211.243.47.122:3005/oauth2/authorization/${registrationId}`,
             }}
-            onNavigationStateChange={async (navState) => {
-              if (
-                navState.url.startsWith(
-                  "http://localhost:5173/auth?access-token="
-                )
-              ) {
-                const url = [...navState.url.split("?")];
-                url.shift();
-
-                const params = url[0].split("&");
-
-                for (let param of params) {
-                  if (param.startsWith("access-token")) {
-                    try {
-                      await AsyncStorage.setItem(
-                        "@user_token",
-                        param.split("=")[1]
-                      );
-                    } catch (e) {
-                      console.error("토큰 저장에 실패하였습니다.");
-                    }
-                  }
-                }
-
-                setShowWebView(false);
-              }
-            }}
+            onNavigationStateChange={handleNavigation}
             startInLoadingState={true}
           />
         </View>

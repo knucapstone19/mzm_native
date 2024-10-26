@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity, Image } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../styles/styles";
 
 const LoginButton = ({
@@ -18,9 +19,10 @@ const LoginButton = ({
         borderColor ? `border-[1px] border-[${borderColor}]` : null
       }`}
       activeOpacity={0.7}
-      onPress={() => {
+      onPress={async () => {
         setShowWebView(true);
         setRegistrationId(registrationId);
+        await AsyncStorage.setItem("@registration_id", registrationId);
       }}
     >
       <Image className="w-[22px] h-[22px]" source={src} />

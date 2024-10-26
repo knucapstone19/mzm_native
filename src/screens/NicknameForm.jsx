@@ -22,7 +22,7 @@ const NicknameForm = () => {
 
   useEffect(() => {
     let isDuplicated = null;
-    const checkDuplicate = async () => {
+    const checkError = async () => {
       try {
         const res = await fetch(
           `http://211.243.47.122:3005/user/duplicate-name?name=${inputText}`
@@ -45,7 +45,7 @@ const NicknameForm = () => {
         setIsDisabled(false);
       }
     };
-    checkDuplicate();
+    checkError();
   }, [inputText]);
 
   return (
