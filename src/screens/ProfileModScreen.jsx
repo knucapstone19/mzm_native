@@ -10,6 +10,7 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopBar from "../components/TopBar";
 import styles from "../styles/styles";
 
@@ -17,8 +18,12 @@ const ProfileModScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const [schoolData, setSchoolData] = useState([]);
-  const [nickname, setNickname] = useState(route.params.data[0]);
-  const [school, setSchool] = useState([null, route.params.data[1]]);
+  const [url, setUrl] = useState(route.params.data[0]);
+  const [nickname, setNickname] = useState(route.params.data[1]);
+  const [school, setSchool] = useState([
+    route.params.data[2],
+    route.params.data[3],
+  ]);
   const [isDisabled, setIsDisabled] = useState(true);
   const [message, setMessage] = useState("");
   const modalizeRef = useRef(null);
@@ -43,7 +48,7 @@ const ProfileModScreen = () => {
   useEffect(() => {
     let isDuplicated = null;
     const checkError = async () => {
-      if (nickname !== route.params.data[0]) {
+      if (nickname !== route.params.data[1]) {
         try {
           const res = await fetch(
             `http://211.243.47.122:3005/user/duplicate-name?name=${nickname}`
@@ -80,10 +85,14 @@ const ProfileModScreen = () => {
       />
 
       <View className="items-center px-6 pt-10">
-        <TouchableOpacity>
+        <TouchableOpacity
+          className="rounded-full border-4 border-white"
+          activeOpacity={0.7}
+        >
           <Image
-            className="w-32 h-32"
-            source={require("../../assets/images/profile.png")}
+            className="w-28 h-28 rounded-full"
+            activeOpacity={0.7}
+            source={{ uri: url }}
           />
         </TouchableOpacity>
 
@@ -139,6 +148,52 @@ const ProfileModScreen = () => {
             isDisabled ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
           } w-full py-3.5 mt-10 rounded-[10px]`}
           activeOpacity={0.7}
+          onPress={async () => {
+            const token = await AsyncStorage.getItem("@user_token");
+
+            const updatedData = {
+              schoolId: school[0],
+            };
+
+            if (nickname !== route.params.data[0]) {
+              updatedData.username = nickname;
+            }
+
+            try {
+              const res = await fetch("http://211.243.47.122:3005/user", {
+                method: "PATCH",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedData),
+              });
+
+              if (!res.ok) {
+                throw new Error("서버 응답이 올바르지 않습니다.");
+              }
+
+              const result = await res.json();
+              console.log("업데이트된 유저 정보:", result);
+            } catch (error) {
+              console.error("유저 정보 업데이트 중 오류 발생:", error);
+            }
+
+            try {
+              const res = await fetch("http://211.243.47.122:3005/user", {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              data = await res.json();
+              console.log(data);
+            } catch (e) {
+              console.error(e.message);
+            }
+
+            navigation.navigate("Main");
+          }}
         >
           <Text className={`${styles("16-title")} text-center text-[#FFFFFF]`}>
             완료

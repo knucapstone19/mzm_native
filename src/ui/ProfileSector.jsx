@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HistTabButton from "../components/HistTabButton";
 import styles from "../styles/styles";
@@ -9,26 +9,33 @@ const ProfileSector = () => {
   const [profileData, setProfileData] = useState([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const getProfile = async () => {
-      const token = await AsyncStorage.getItem("@user_token");
-      let data = null;
+  useFocusEffect(
+    useCallback(() => {
+      const getProfile = async () => {
+        const token = await AsyncStorage.getItem("@user_token");
+        let data = null;
 
-      try {
-        const res = await fetch("http://211.243.47.122:3005/user", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        data = await res.json();
-        setProfileData([data?.user.username, data?.user.school.schoolName]);
-      } catch (e) {
-        console.error(e.message);
-      }
-    };
-    getProfile();
-  }, []);
+        try {
+          const res = await fetch("http://211.243.47.122:3005/user", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          data = await res.json();
+          setProfileData([
+            data?.user.profileUrl,
+            data?.user.username,
+            data?.user.school.schoolId,
+            data?.user.school.schoolName,
+          ]);
+        } catch (e) {
+          console.error(e.message);
+        }
+      };
+      getProfile();
+    }, [])
+  );
 
   return (
     <View
@@ -38,20 +45,20 @@ const ProfileSector = () => {
       }}
       className="mt-4 mb-8"
     >
-      <View className="bg-white flex flex-col pt-[14px] pb-4 px-4 rounded-[10px]">
-        <View className="flex-row items-center">
+      <View className="bg-white flex flex-col pt-6 pb-4 px-4 rounded-[10px]">
+        <View className="flex-row justify-between items-center px-6">
           <Image
-            className="w-32 h-32 mr-6"
-            source={require("../../assets/images/profile.png")}
+            className="w-28 h-28 rounded-full"
+            source={{ uri: profileData[0] }}
           />
           <View className="flex-col">
             <View className="flex-row items-center mb-6">
               <Text className={`pr-2 ${styles("16-title")} text-[#383838]`}>
-                {profileData[0]}
+                {profileData[1]}
               </Text>
               <View className="h-[14px] border-[0.5px] border-[#666666]" />
               <Text className={`pl-2 ${styles("16-text")} text-[#A9A9A9]`}>
-                {profileData[1]}
+                {profileData[3]}
               </Text>
             </View>
             <TouchableOpacity
