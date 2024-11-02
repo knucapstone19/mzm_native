@@ -7,6 +7,7 @@ import LoginScreen from "./screens/LoginScreen";
 import NicknameForm from "./screens/NicknameForm";
 import SchoolForm from "./screens/SchoolForm";
 import TabBar from "./ui/TabBar";
+import SettingScreen from "./screens/SettingScreen";
 import MbtiTestScreen from "./screens/MbtiTestScreen";
 import MbtiResScreen from "./screens/MbtiResScreen";
 import ProfileModScreen from "./screens/ProfileModScreen";
@@ -22,6 +23,7 @@ const App = () => {
           <Stack.Screen name="Nickname" component={NicknameForm} />
           <Stack.Screen name="School" component={SchoolForm} />
           <Stack.Screen name="Main" component={TabBar} />
+          <Stack.Screen name="Setting" component={SettingScreen} />
           <Stack.Screen name="MbtiTest" component={MbtiTestScreen} />
           <Stack.Screen name="MbtiRes" component={MbtiResScreen} />
           <Stack.Screen name="ProfileMod" component={ProfileModScreen} />

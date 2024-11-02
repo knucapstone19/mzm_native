@@ -155,7 +155,7 @@ const ProfileModScreen = () => {
               schoolId: school[0],
             };
 
-            if (nickname !== route.params.data[0]) {
+            if (nickname !== route.params.data[1]) {
               updatedData.username = nickname;
             }
 
@@ -194,6 +194,7 @@ const ProfileModScreen = () => {
 
             navigation.navigate("Main");
           }}
+          disabled={isDisabled}
         >
           <Text className={`${styles("16-title")} text-center text-[#FFFFFF]`}>
             완료
