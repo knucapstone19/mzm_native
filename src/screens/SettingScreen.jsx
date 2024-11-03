@@ -14,9 +14,62 @@ import ArrowIcon from "../../assets/images/icons/arrow.svg";
 import styles from "../styles/styles";
 
 const SettingScreen = () => {
-  const isFirstRef = useRef(true);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const isFirstRef = useRef(true);
   const navigation = useNavigation();
+
+  const handleLogOut = async () => {
+    await AsyncStorage.removeItem("@user_token");
+    await AsyncStorage.removeItem("@user_name");
+    setIsLoggedOut(true);
+
+    if (Platform.OS === "ios") {
+      Alert.alert("앱을 종료하려면 홈 버튼을 눌러주세요.", "");
+    } else {
+      BackHandler.exitApp();
+    }
+  };
+
+  const handleWithdraw = async () => {
+    const token = await AsyncStorage.getItem("@user_token");
+
+    try {
+      const res = await fetch("http://211.243.47.122:3005/user", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error("서버 응답이 올바르지 않습니다.");
+      }
+
+      await res.json();
+    } catch (error) {
+      console.error("유저 정보 삭제 중 오류 발생:", error);
+    }
+
+    handleLogOut();
+  };
+
+  const checkWithdraw = () => {
+    Alert.alert(
+      "회원 탈퇴",
+      "정말로 회원 탈퇴를 하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: handleWithdraw,
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
   useEffect(() => {
     if (isFirstRef.current) {
@@ -30,10 +83,10 @@ const SettingScreen = () => {
   return (
     <View>
       <TopBar
-        isBack={true}
         title="환경 설정"
+        isBack={true}
         bgColor="white"
-        onPress={() => navigation.goBack()}
+        handleBack={() => navigation.goBack()}
       />
       <View>
         <View>
@@ -47,17 +100,8 @@ const SettingScreen = () => {
           <View className="bg-white">
             <TouchableOpacity
               className="flex-row justify-between items-center p-4 border-b-[1px] border-[#D3D3D3]"
+              onPress={handleLogOut}
               activeOpacity={0.7}
-              onPress={async () => {
-                await AsyncStorage.removeItem("@user_token");
-                setIsLoggedOut(true);
-
-                if (Platform.OS === "ios") {
-                  Alert.alert("앱을 종료하려면 홈 버튼을 눌러주세요.", "");
-                } else {
-                  BackHandler.exitApp();
-                }
-              }}
             >
               <Text className={`${styles("14-text")} text-[#383838]`}>
                 로그아웃
@@ -66,60 +110,8 @@ const SettingScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               className="flex-row justify-between items-center p-4 border-b-[1px] border-[#D3D3D3]"
+              onPress={checkWithdraw}
               activeOpacity={0.7}
-              onPress={() => {
-                Alert.alert(
-                  "회원 탈퇴",
-                  "정말로 회원 탈퇴를 하시겠습니까?",
-                  [
-                    {
-                      text: "취소",
-                      style: "cancel",
-                    },
-                    {
-                      text: "확인",
-                      onPress: async () => {
-                        const token = await AsyncStorage.getItem("@user_token");
-
-                        try {
-                          const res = await fetch(
-                            "http://211.243.47.122:3005/user",
-                            {
-                              method: "DELETE",
-                              headers: {
-                                Authorization: `Bearer ${token}`,
-                              },
-                            }
-                          );
-
-                          if (!res.ok) {
-                            throw new Error("서버 응답이 올바르지 않습니다.");
-                          }
-
-                          const result = await res.json();
-                          console.log("삭제된 유저 정보:", result);
-                        } catch (error) {
-                          console.error("유저 정보 삭제 중 오류 발생:", error);
-                        }
-
-                        await AsyncStorage.removeItem("@user_token");
-                        await AsyncStorage.removeItem("@user_name");
-                        setIsLoggedOut(true);
-
-                        if (Platform.OS === "ios") {
-                          Alert.alert(
-                            "앱을 종료하려면 홈 버튼을 눌러주세요.",
-                            ""
-                          );
-                        } else {
-                          BackHandler.exitApp();
-                        }
-                      },
-                    },
-                  ],
-                  { cancelable: true }
-                );
-              }}
             >
               <Text className={`${styles("14-text")} text-[#E21B1B]`}>
                 회원탈퇴

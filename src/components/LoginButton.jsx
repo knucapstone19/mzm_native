@@ -1,37 +1,39 @@
-import { Text, TouchableOpacity, Image } from "react-native";
+import { Image, Text, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../styles/styles";
 
 const LoginButton = ({
-  color,
+  regId,
+  setRegId,
+  setShowWebview,
+  src,
+  platform,
+  bgColor,
   textColor = "#111111",
   borderColor = null,
-  src,
-  enterprise,
-  registrationId,
-  setShowWebView,
-  setRegistrationId,
 }) => {
+  const handleLogin = async () => {
+    setShowWebview(true);
+    setRegId(regId);
+    await AsyncStorage.setItem("@reg_id", regId);
+  };
+
   return (
     <TouchableOpacity
-      style={{ backgroundColor: color }}
-      className={`flex-row justify-center py-[14px] space-x-2 rounded-[10px] ${
+      style={{ backgroundColor: bgColor }}
+      className={`flex-row justify-center space-x-2 py-[14px] ${
         borderColor ? `border-[1px] border-[${borderColor}]` : null
-      }`}
+      } rounded-[10px]`}
+      onPress={handleLogin}
       activeOpacity={0.7}
-      onPress={async () => {
-        setShowWebView(true);
-        setRegistrationId(registrationId);
-        await AsyncStorage.setItem("@registration_id", registrationId);
-      }}
     >
-      <Image className="w-[22px] h-[22px]" source={src} />
+      <Image source={src} className="w-[22px] h-[22px]" />
       <Text
         className={`${styles("16-title")} ${
           textColor === "white" ? "text-white" : `text-[${textColor}]`
         }`}
       >
-        {`${enterprise}로 계속하기`}
+        {`${platform}로 계속하기`}
       </Text>
     </TouchableOpacity>
   );

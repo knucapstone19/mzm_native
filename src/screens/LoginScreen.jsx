@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import {
-  View,
-  FlatList,
-  Platform,
   Alert,
   BackHandler,
+  FlatList,
   Modal,
+  Platform,
+  View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import WebView from "react-native-webview";
@@ -22,19 +22,26 @@ const SOCIAL_IMAGES = {
   "google.png": require("../../assets/images/social/google.png"),
 };
 
-// TODO: 모달 컴포넌트 분리 및 함수 정리 필요
+// TODO: 로그인 로직과 모달 로직 분리 고려
 const LoginScreen = () => {
-  const [showWebView, setShowWebView] = useState(false);
-  const [registrationId, setRegistrationId] = useState("");
+  const [showWebview, setShowWebview] = useState(false);
+  const [regId, setRegId] = useState("");
   const navigation = useNavigation();
-
   const socialData = SocialData.map((item) => ({
     ...item,
     src: SOCIAL_IMAGES[item.src],
   }));
 
+  const handleExit = () => {
+    if (Platform.OS === "ios") {
+      Alert.alert("앱을 종료하려면 홈 버튼을 눌러주세요.", "");
+    } else {
+      BackHandler.exitApp();
+    }
+  };
+
   let isNavigating = false;
-  const checkNavigation = async (token) => {
+  const checkNavigate = async (token) => {
     let data = null;
     if (token) {
       try {
@@ -61,16 +68,16 @@ const LoginScreen = () => {
     }
   };
 
-  const handleNavigation = async (navState) => {
+  const handleNavigate = async (navState) => {
     if (navState.url.startsWith("http://localhost:5173/auth?access-token=")) {
       if (isNavigating) return;
       isNavigating = true;
 
       const url = [...navState.url.split("?")];
       url.shift();
+      const params = url[0].split("&");
 
       let token = null;
-      const params = url[0].split("&");
       for (let param of params) {
         if (param.startsWith("access-token")) {
           try {
@@ -82,26 +89,25 @@ const LoginScreen = () => {
         }
       }
 
-      checkNavigation(token);
-      setShowWebView(false);
+      checkNavigate(token);
+      setShowWebview(false);
     }
   };
 
   useEffect(() => {
     const hasToken = async () => {
       const token = await AsyncStorage.getItem("@user_token");
-      const id = await AsyncStorage.getItem("@registration_id");
-
-      setRegistrationId(id);
+      const id = await AsyncStorage.getItem("@reg_id");
+      setRegId(id);
 
       if (token) {
         const { exp } = jwtDecode(token);
         const now = Math.floor(Date.now() / 1000);
 
         if (now < exp) {
-          checkNavigation(token);
+          checkNavigate(token);
         } else {
-          setShowWebView(true);
+          setShowWebview(true);
         }
       }
     };
@@ -109,32 +115,23 @@ const LoginScreen = () => {
   }, []);
 
   return (
-    <View className="bg-white flex-1">
-      <TopBar
-        isBack={true}
-        onPress={() => {
-          if (Platform.OS === "ios") {
-            Alert.alert("앱을 종료하려면 홈 버튼을 눌러주세요.", "");
-          } else {
-            BackHandler.exitApp();
-          }
-        }}
-      />
-      <View className="items-center w-full px-6 pt-40 space-y-[120px]">
+    <View className="flex-1 bg-white">
+      <TopBar isBack={true} handleBack={handleExit} />
+      <View className="items-center w-full space-y-[120px] px-6 pt-40">
         <SplashLogo />
         <View className="w-full space-y-3">
           <FlatList
             data={socialData}
             renderItem={({ item, index }) => (
               <LoginButton
-                color={item.color}
+                regId={item.regId}
+                setRegId={setRegId}
+                setShowWebview={setShowWebview}
+                src={item.src}
+                platform={item.platform}
+                bgColor={item.bgColor}
                 textColor={item?.textColor}
                 borderColor={item?.borderColor}
-                src={item.src}
-                enterprise={item.enterprise}
-                registrationId={item.registrationId}
-                setShowWebView={setShowWebView}
-                setRegistrationId={setRegistrationId}
               />
             )}
             keyExtractor={(_, idx) => idx.toString()}
@@ -145,22 +142,17 @@ const LoginScreen = () => {
       </View>
 
       <Modal
-        visible={showWebView}
-        onRequestClose={() => setShowWebView(false)}
+        visible={showWebview}
+        onRequestClose={() => setShowWebview(false)}
         animationType="slide"
       >
         <View className="flex-1">
-          <TopBar
-            isBack={true}
-            onPress={() => {
-              setShowWebView(false);
-            }}
-          />
+          <TopBar isBack={true} onPress={() => setShowWebview(false)} />
           <WebView
             source={{
-              uri: `http://211.243.47.122:3005/oauth2/authorization/${registrationId}`,
+              uri: `http://211.243.47.122:3005/oauth2/authorization/${regId}`,
             }}
-            onNavigationStateChange={handleNavigation}
+            onNavigationStateChange={handleNavigate}
             startInLoadingState={true}
           />
         </View>

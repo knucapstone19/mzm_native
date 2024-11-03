@@ -1,5 +1,5 @@
-import { useRef, useCallback } from "react";
-import { View, Dimensions } from "react-native";
+import { useCallback, useRef } from "react";
+import { Dimensions, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { WebView } from "react-native-webview";
 import SearchBar from "../components/SearchBar";
@@ -60,9 +60,9 @@ const SearchScreen = () => {
             elevation: 1,
             borderRadius: 10,
           }}
-          className="bg-white w-full mx-6 absolute top-2 z-10 rounded-md"
+          className="w-full mx-6 absolute top-2 z-10 rounded-md bg-white"
         >
-          <SearchBar ref={searchBarRef} border={false} focus={true} />
+          <SearchBar ref={searchBarRef} border={false} />
         </View>
 
         <View className="flex-1">

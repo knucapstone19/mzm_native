@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import CheckIcon from "../../assets/images/icons/check.svg";
 import styles from "../styles/styles";
 
-const MbtiQuestion = ({ num, question, rating, prop, res, sendRes }) => {
+const MbtiQuestion = ({ idx, question, rating, attribute, res, sendRes }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const options = [3, 2, 1, 0, -1, -2, -3];
 
-  const updateArray = (option) => {
-    const newArray = [...res];
-    newArray[num] = [prop, option * rating];
-    sendRes(newArray);
+  const updateRes = (option) => {
+    const newRes = [...res];
+    newRes[idx] = [attribute, option * rating];
+    sendRes(newRes);
+  };
+
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+    updateRes(option);
   };
 
   return (
@@ -46,17 +51,14 @@ const MbtiQuestion = ({ num, question, rating, prop, res, sendRes }) => {
                 ? "border-[#C74040]"
                 : "border-[#383838]"
             } border-2 rounded-full`}
+            onPress={() => handleSelect(option)}
             activeOpacity={0.8}
-            onPress={() => {
-              setSelectedOption(option);
-              updateArray(option);
-            }}
           >
             {selectedOption === option && <CheckIcon />}
           </TouchableOpacity>
         ))}
       </View>
-      <View className="flex-row justify-between px-1 mt-1.5">
+      <View className="flex-row justify-between mt-1.5 px-1">
         <Text className={`${styles("12-text")} text-[#383838]`}>동의</Text>
         <Text className={`${styles("12-text")} text-[#383838]`}>비동의</Text>
       </View>

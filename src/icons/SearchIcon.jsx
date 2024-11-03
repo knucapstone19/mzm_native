@@ -1,4 +1,4 @@
-import { Svg, Line, Circle } from "react-native-svg";
+import Svg, { Circle, Line } from "react-native-svg";
 
 const SearchIcon = ({ color = "#B0B0B0" }) => (
   <Svg width="28" height="28" viewBox="0 0 24 24" fill="none">

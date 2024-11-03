@@ -1,30 +1,28 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import BackIcon from "../../assets/images/icons/back.svg";
-import MenuIcon from "../icons/MenuIcon";
 import styles from "../styles/styles";
 
 const TopBar = ({
   title = null,
   isBack = false,
-  isMenu = false,
   bgColor = null,
-  onPress = () => {},
+  handleBack = () => {},
 }) => {
   return (
     <View
-      className={`bg-${bgColor} flex-row ${
-        !(isBack || isMenu) ? "justify-center" : "justify-between"
+      className={`flex-row ${
+        !isBack ? "justify-center" : "justify-between"
       } items-center w-full h-14 px-6 ${
-        title || isMenu ? "border-b-[1px] border-[#D3D3D3]" : null
-      }`}
+        title ? "border-b-[1px] border-[#D3D3D3]" : null
+      } bg-${bgColor}`}
     >
       {isBack && (
-        <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+        <TouchableOpacity onPress={handleBack} activeOpacity={0.7}>
           <BackIcon />
         </TouchableOpacity>
       )}
       <Text className={`${styles("18-title")} text-[#111111]`}>{title}</Text>
-      {title && isBack && <View className="w-[28px] h-[28px]"></View>}
+      {title && isBack && <View className="w-[28px] h-[28px]" />}
     </View>
   );
 };

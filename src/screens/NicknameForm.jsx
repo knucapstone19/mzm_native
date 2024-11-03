@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopBar from "../components/TopBar";
@@ -12,6 +12,15 @@ const NicknameForm = () => {
   const [message, setMessage] = useState("");
   const inputRef = useRef(null);
   const navigation = useNavigation();
+
+  const handleNavigate = async () => {
+    try {
+      await AsyncStorage.setItem("@user_name", inputText);
+      navigation.navigate("School");
+    } catch (e) {
+      console.error(e.message);
+    }
+  };
 
   useEffect(() => {
     return navigation.addListener("beforeRemove", (e) => {
@@ -49,9 +58,9 @@ const NicknameForm = () => {
   }, [inputText]);
 
   return (
-    <View className="bg-white flex-1">
+    <View className="flex-1 bg-white">
       <TopBar />
-      <View className="flex-1 flex-col justify-between px-6 py-6">
+      <View className="flex-1 flex-col justify-between p-6">
         <View>
           <Text className={`mb-10 ${styles("bold-20-title")} text-[#111111]`}>
             사용하실 닉네임을 입력해주세요!
@@ -63,45 +72,38 @@ const NicknameForm = () => {
           >
             <TextInput
               ref={inputRef}
-              className="ml-1 font-normal text-base leading-[22.4px] tracking-normal text-[#111111]"
+              value={inputText}
+              onChangeText={(text) => setInputText(text)}
               placeholder="닉네임 (2~10자, 영문, 숫자 사용 가능)"
               placeholderTextColor="#A9A9A9"
               textAlignVertical="center"
-              value={inputText}
-              onChangeText={(text) => setInputText(text)}
+              className="ml-1 font-normal text-base tracking-normal leading-[22.4px] text-[#111111]"
             />
-            {inputText ? (
+            {inputText && (
               <TouchableOpacity
                 className="mr-2"
-                activeOpacity={0.7}
                 onPress={() => setInputText("")}
+                activeOpacity={0.7}
               >
                 <DeleteIcon />
               </TouchableOpacity>
-            ) : null}
+            )}
           </View>
-          {isDisabled ? (
+          {isDisabled && (
             <Text className={`mt-2 ${styles("14-text")} text-[#EC2222]`}>
               {message}
             </Text>
-          ) : null}
+          )}
         </View>
         <TouchableOpacity
-          className={`${
+          className={`py-3.5 rounded-[10px] ${
             isDisabled ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
-          }  py-3.5 rounded-[10px]`}
+          }`}
+          onPress={handleNavigate}
           activeOpacity={0.7}
-          onPress={async () => {
-            try {
-              await AsyncStorage.setItem("@user_name", inputText);
-              navigation.navigate("School");
-            } catch (e) {
-              console.error(e.message);
-            }
-          }}
           disabled={isDisabled}
         >
-          <Text className={`${styles("16-title")} text-center text-[#FFFFFF]`}>
+          <Text className={`${styles("16-title")} text-[#FFFFFF] text-center`}>
             다음
           </Text>
         </TouchableOpacity>

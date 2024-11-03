@@ -1,18 +1,16 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 
-const CategoryItem = ({ src, text, isSmall, idx, margin = 2 }) => {
+const CategoryItem = ({ idx, src, text, isSmall, margin = 2 }) => {
   return (
     <TouchableOpacity
       key={idx.toString()}
-      className={`flex flex-col items-center ${
-        margin === 2 ? "mx-2" : "mx-2.5"
-      }`}
-      activeOpacity={0.7}
+      className={`flex-col items-center ${margin === 2 ? "mx-2" : "mx-2.5"}`}
       onPress={() => console.log(text)}
+      activeOpacity={0.7}
     >
       <View
-        className={`bg-[#F0F0F0] ${isSmall ? "p-3" : "p-[10px]"} rounded-full`}
+        className={`${isSmall ? "p-3" : "p-[10px]"} rounded-full bg-[#F0F0F0]`}
       >
         <Image source={src} className={`${isSmall ? "w-6 h-6" : "w-7 h-7"}`} />
       </View>

@@ -1,22 +1,22 @@
 [
   {
-    "color": "#FAE100",
+    "regId": "kakao",
     "src": "kakao.png",
-    "enterprise": "카카오",
-    "registrationId": "kakao"
+    "platform": "카카오",
+    "bgColor": "#FAE100"
   },
   {
-    "color": "#03C75A",
-    "textColor": "white",
+    "regId": "naver",
     "src": "naver.png",
-    "enterprise": "네이버",
-    "registrationId": "naver"
+    "platform": "네이버",
+    "bgColor": "#03C75A",
+    "textColor": "white"
   },
   {
-    "color": "#FFFFFF",
-    "borderColor": "#D3D3D3",
+    "regId": "google",
     "src": "google.png",
-    "enterprise": "구글",
-    "registrationId": "google"
+    "platform": "구글",
+    "bgColor": "#FFFFFF",
+    "borderColor": "#D3D3D3"
   }
 ]

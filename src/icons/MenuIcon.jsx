@@ -1,4 +1,4 @@
-import { Svg, Path, ClipPath, G, Defs, Rect } from "react-native-svg";
+import Svg, { ClipPath, Defs, G, Path, Rect } from "react-native-svg";
 
 const MenuIcon = ({ color = "#363636" }) => {
   return (

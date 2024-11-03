@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, FlatList, Dimensions } from "react-native";
+import { Dimensions, FlatList, Text, View } from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import CategoryData from "../json/categoryData.json";
 import styles from "../styles/styles";
@@ -17,7 +17,7 @@ const CATEGORY_IMAGES = {
 
 const CategorySector = () => {
   const [categoryCols, setcategoryCols] = useState(5);
-  const categoryWidth = Dimensions.get("window").width - 80 - 64;
+  const categoryWidth = Dimensions.get("window").width - 144;
   const categoryData = CategoryData.map((item) => ({
     ...item,
     src: CATEGORY_IMAGES[item.src],
@@ -35,7 +35,7 @@ const CategorySector = () => {
       }}
       className="mt-4 mb-2"
     >
-      <View className="bg-white flex flex-col items-stretch pt-[14px] pb-4 px-4 rounded-[10px]">
+      <View className="flex-col items-stretch px-4 pt-[14px] pb-4 rounded-[10px] bg-white">
         <Text className={`mb-2 ${styles("main")} text-[#111111]`}>
           메뉴 별 카테고리
         </Text>
@@ -45,10 +45,10 @@ const CategorySector = () => {
             data={categoryData}
             renderItem={({ item, index }) => (
               <CategoryItem
+                idx={index}
                 src={item.src}
                 text={item.text}
                 isSmall={item.isSmall}
-                idx={index}
               />
             )}
             keyExtractor={(_, idx) => idx.toString()}
@@ -61,12 +61,12 @@ const CategorySector = () => {
             key={"#"}
             className="self-center"
             data={categoryData}
-            renderItem={({ item, index }) => (
+            renderItem={({ item, idx }) => (
               <CategoryItem
+                idx={idx}
                 src={item.src}
                 text={item.text}
                 isSmall={item.isSmall}
-                idx={index}
                 margin={2.5}
               />
             )}

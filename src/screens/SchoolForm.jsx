@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
@@ -14,8 +14,42 @@ const SchoolForm = () => {
   const modalizeRef = useRef(null);
   const navigation = useNavigation();
 
+  const handleSelect = (school) => {
+    setInputSelect(school);
+    modalizeRef.current?.close();
+  };
+
+  const updateProfile = async () => {
+    const token = await AsyncStorage.getItem("@user_token");
+    const userName = await AsyncStorage.getItem("@user_name");
+
+    try {
+      const res = await fetch("http://211.243.47.122:3005/user", {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: userName,
+          schoolId: inputSelect[0],
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("서버 응답이 올바르지 않습니다.");
+      }
+
+      await res.json();
+    } catch (error) {
+      console.error("유저 정보 업데이트 중 오류 발생:", error);
+    }
+
+    navigation.replace("Main");
+  };
+
   useEffect(() => {
-    const getSchool = async () => {
+    const getSchoolData = async () => {
       const res = await fetch("http://211.243.47.122:3005/school");
       const data = await res.json();
 
@@ -25,25 +59,24 @@ const SchoolForm = () => {
     };
 
     try {
-      getSchool();
+      getSchoolData();
     } catch (e) {
       console.error(e.message);
     }
   }, []);
 
   return (
-    <GestureHandlerRootView className="bg-white flex-1">
-      <TopBar isBack={true} onPress={() => navigation.goBack()} />
-      <View className="flex-1 flex-col justify-between px-6 py-6">
+    <GestureHandlerRootView className="flex-1 bg-white">
+      <TopBar isBack={true} handleBack={() => navigation.goBack()} />
+      <View className="flex-1 flex-col justify-between p-6">
         <View>
           <Text className={`mb-10 ${styles("bold-20-title")} text-[#111111]`}>
             재학중인 학교를 선택해주세요!
           </Text>
-
           <TouchableOpacity
             className="flex-row justify-between items-center px-4 py-3 border-[1px] border-[#D3D3D3] rounded-[10px]"
-            activeOpacity={0.7}
             onPress={() => modalizeRef.current?.open()}
+            activeOpacity={0.7}
           >
             <Text className={`${styles("16-text")} text-[#111111]`}>
               {inputSelect ? inputSelect[1] : "학교를 선택해주세요!"}
@@ -52,42 +85,14 @@ const SchoolForm = () => {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          className={`${
+          className={`py-3.5 rounded-[10px] ${
             !inputSelect ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
-          }  py-3.5 rounded-[10px]`}
+          }`}
+          onPress={updateProfile}
           activeOpacity={0.7}
-          onPress={async () => {
-            const token = await AsyncStorage.getItem("@user_token");
-            const userName = await AsyncStorage.getItem("@user_name");
-
-            try {
-              const res = await fetch("http://211.243.47.122:3005/user", {
-                method: "PATCH",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  username: userName,
-                  schoolId: inputSelect[0],
-                }),
-              });
-
-              if (!res.ok) {
-                throw new Error("서버 응답이 올바르지 않습니다.");
-              }
-
-              const result = await res.json();
-              console.log("업데이트된 유저 정보:", result);
-            } catch (error) {
-              console.error("유저 정보 업데이트 중 오류 발생:", error);
-            }
-
-            navigation.replace("Main");
-          }}
           disabled={!inputSelect}
         >
-          <Text className={`${styles("16-title")} text-center text-[#FFFFFF]`}>
+          <Text className={`${styles("16-title")} text-[#FFFFFF] text-center`}>
             완료
           </Text>
         </TouchableOpacity>
@@ -116,11 +121,8 @@ const SchoolForm = () => {
             <TouchableOpacity
               key={index}
               className="px-6 py-[17px]"
+              onPress={() => handleSelect(school)}
               activeOpacity={0.7}
-              onPress={() => {
-                setInputSelect(school);
-                modalizeRef.current?.close();
-              }}
             >
               <Text className={`${styles("16-text")} text-[#111111]`}>
                 {school[1]}

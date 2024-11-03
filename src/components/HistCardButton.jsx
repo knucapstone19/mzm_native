@@ -5,7 +5,7 @@ import styles from "../styles/styles";
 const HistCardButton = ({ title, text }) => {
   return (
     <TouchableOpacity
-      className="bg-white flex-row justify-between items-center pt-[14px] pb-4 px-4 border-[1px] border-[#D3D3D3] rounded-[10px]"
+      className="flex-row justify-between items-center px-4 pt-[14px] pb-4 border-[1px] border-[#D3D3D3] rounded-[10px] bg-white"
       activeOpacity={0.7}
     >
       <View className="flex-col">
