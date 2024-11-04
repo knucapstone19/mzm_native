@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import {
   Animated,
+  FlatList,
   Image,
   ScrollView,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TopBar from "../components/TopBar";
 import MbtiQuestion from "../components/MbtiQuestion";
+import ContentButton from "../components/ContentButton";
 import MbtiQData from "../json/mbtiQData.json";
 import MbtiRData from "../json/mbtiRData.json";
 import styles from "../styles/styles";
@@ -89,29 +90,27 @@ const MbtiTestScreen = () => {
                 항목은 총 20개이며 예상 시간은 40분입니다.
               </Text>
             </View>
-            {MbtiQData.map((item, idx) => (
-              <MbtiQuestion
-                key={idx}
-                idx={idx}
-                question={item.question}
-                rating={item.rating}
-                attribute={item.attribute}
-                res={resArray}
-                sendRes={setResArray}
-              />
-            ))}
-            <TouchableOpacity
-              className={`w-48 mt-10 py-2.5 rounded-full ${
-                isDisabled ? "bg-[#B0B0B0]" : "bg-[#40BAFF]"
-              }`}
-              onPress={handleNavigate}
-              activeOpacity={0.7}
-              disabled={isDisabled}
-            >
-              <Text className={`${styles("16-title")} text-center text-white`}>
-                완료
-              </Text>
-            </TouchableOpacity>
+            <FlatList
+              data={MbtiQData}
+              renderItem={({ item, index }) => (
+                <MbtiQuestion
+                  key={index}
+                  idx={index}
+                  question={item.question}
+                  rating={item.rating}
+                  attribute={item.attribute}
+                  res={resArray}
+                  sendRes={setResArray}
+                />
+              )}
+              keyExtractor={(_, idx) => idx.toString()}
+              scrollEnabled={false}
+            />
+            <ContentButton
+              text="완료"
+              isDisabled={isDisabled}
+              handleNavigate={handleNavigate}
+            />
           </View>
         </ScrollView>
       )}

@@ -15,6 +15,7 @@ import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
 import SocialData from "../json/socialData.json";
+import getUser from "../hooks/getUser";
 
 const SOCIAL_IMAGES = {
   "kakao.png": require("../../assets/images/social/kakao.png"),
@@ -42,24 +43,11 @@ const LoginScreen = () => {
 
   let isNavigating = false;
   const checkNavigate = async (token) => {
-    let data = null;
-    if (token) {
-      try {
-        const res = await fetch("http://211.243.47.122:3005/user", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        data = await res.json();
-      } catch (e) {
-        console.error(e.message);
-      }
-    }
+    const data = await getUser(token);
 
     try {
       if (!data?.user.school && token) {
-        navigation.navigate("Nickname");
+        navigation.navigate("Username");
       } else if (data?.user.school && token) {
         navigation.replace("Main");
       }
@@ -147,7 +135,7 @@ const LoginScreen = () => {
         animationType="slide"
       >
         <View className="flex-1">
-          <TopBar isBack={true} onPress={() => setShowWebview(false)} />
+          <TopBar isBack={true} handleBack={() => setShowWebview(false)} />
           <WebView
             source={{
               uri: `http://211.243.47.122:3005/oauth2/authorization/${regId}`,

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import getUser from "../hooks/getUser";
 import HistTabButton from "../components/HistTabButton";
 import styles from "../styles/styles";
 
@@ -29,25 +30,17 @@ const ProfileSector = () => {
   useFocusEffect(
     useCallback(() => {
       const getProfile = async () => {
-        const token = await AsyncStorage.getItem("@user_token");
-        let data = null;
-
         try {
-          const res = await fetch("http://211.243.47.122:3005/user", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          data = await res.json();
+          const token = await AsyncStorage.getItem("@user_token");
+          const data = await getUser(token);
           setProfileData([
             data?.user.profileUrl,
             data?.user.username,
             data?.user.school.schoolId,
             data?.user.school.schoolName,
           ]);
-        } catch (e) {
-          console.error(e.message);
+        } catch (error) {
+          console.error(error);
         }
       };
       getProfile();

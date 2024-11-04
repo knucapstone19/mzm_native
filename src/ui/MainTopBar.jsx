@@ -1,35 +1,24 @@
 import { useCallback, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import getUser from "../hooks/getUser";
 import SearchBar from "../components/SearchBar";
 import LogoIcon from "../../assets/images/icons/logo.svg";
 import MenuIcon from "../icons/MenuIcon";
 import styles from "../styles/styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const MainTopBar = () => {
   const [school, setSchool] = useState(null);
-  const navigation = useNavigation();
   const searchBarRef = useRef();
+  const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
       const getSchool = async () => {
         const token = await AsyncStorage.getItem("@user_token");
-        let data = null;
-
-        try {
-          const res = await fetch("http://211.243.47.122:3005/user", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          data = await res.json();
-          setSchool(data?.user.school.schoolName);
-        } catch (e) {
-          console.error(e.message);
-        }
+        const data = await getUser(token);
+        setSchool(data?.user.school.schoolName);
       };
       getSchool();
     }, [])

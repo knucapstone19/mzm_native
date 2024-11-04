@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
-import NicknameForm from "./screens/NicknameForm";
+import UsernameForm from "./screens/UsernameForm";
 import SchoolForm from "./screens/SchoolForm";
 import TabBar from "./ui/TabBar";
 import SettingScreen from "./screens/SettingScreen";
@@ -20,7 +20,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Nickname" component={NicknameForm} />
+          <Stack.Screen name="Username" component={UsernameForm} />
           <Stack.Screen name="School" component={SchoolForm} />
           <Stack.Screen name="Main" component={TabBar} />
           <Stack.Screen name="Setting" component={SettingScreen} />

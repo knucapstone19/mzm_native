@@ -1,6 +1,7 @@
-import { Share, Text, TouchableOpacity, View } from "react-native";
+import { Share, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TopBar from "../components/TopBar";
+import ContentButton from "../components/ContentButton";
 import styles from "../styles/styles";
 
 const MbtiResScreen = ({ route }) => {
@@ -33,26 +34,17 @@ const MbtiResScreen = ({ route }) => {
           </Text>
         </View>
       </View>
-      <View className="items-center space-y-4">
-        <TouchableOpacity
-          className="w-[188px] py-2.5 rounded-full bg-[#40BAFF]"
-          onPress={() => navigation.navigate("Main")}
-          activeOpacity={0.7}
-        >
-          <Text className={`${styles("16-title")} text-white text-center`}>
-            알겠습니다!
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ elevation: 1 }}
-          className="w-[188px] py-[10px] rounded-full bg-white"
-          onPress={handleShare}
-          activeOpacity={0.7}
-        >
-          <Text className={`${styles("16-title")} text-[#40BAFF] text-center`}>
-            공유하기
-          </Text>
-        </TouchableOpacity>
+      <View className="items-center">
+        <ContentButton
+          text="알겠습니다!"
+          handleNavigate={() => navigation.navigate("Main")}
+        />
+        <ContentButton
+          text="공유하기"
+          isShare={true}
+          marginTop={4}
+          handleNavigate={handleShare}
+        />
       </View>
     </View>
   );

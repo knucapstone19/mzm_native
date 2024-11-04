@@ -41,7 +41,7 @@ const CategorySector = () => {
         </Text>
         {categoryCols === 5 ? (
           <FlatList
-            key={"_"}
+            key={"%"}
             data={categoryData}
             renderItem={({ item, index }) => (
               <CategoryItem
@@ -58,7 +58,7 @@ const CategorySector = () => {
           />
         ) : (
           <FlatList
-            key={"#"}
+            key={"$"}
             className="self-center"
             data={categoryData}
             renderItem={({ item, idx }) => (
