@@ -38,6 +38,7 @@ const HomeScreen = () => {
               src={item.src}
               isBig={item.isBig}
               width={item.width}
+              target={item.target}
             />
           )}
           keyExtractor={(_, idx) => idx.toString()}

@@ -2,14 +2,8 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/styles";
 
-const MainSector = ({ idx, title, parts, src, isBig, width }) => {
+const MainSector = ({ idx, title, parts, src, isBig, width, target }) => {
   const navigation = useNavigation();
-
-  const handleNavigate = () => {
-    if (title === "음식 MBTI") {
-      navigation.navigate("MbtiTest");
-    }
-  };
 
   return (
     <View
@@ -21,7 +15,7 @@ const MainSector = ({ idx, title, parts, src, isBig, width }) => {
           elevation: 1,
         }}
         className="h-[104px] px-4 pt-[14px] pb-3 relative overflow-hidden rounded-[10px] bg-white"
-        onPress={handleNavigate}
+        onPress={() => navigation.navigate(target)}
         activeOpacity={0.9}
       >
         <View className="flex-row">

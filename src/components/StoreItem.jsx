@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import LocationIcon from "../../assets/images/icons/location.svg";
 import UnlikedIcon from "../../assets/images/icons/unliked.svg";

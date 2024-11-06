@@ -7,7 +7,8 @@
       { "text": "해주는\n 맛집을 만나보세요!" }
     ],
     "src": "fire.png",
-    "width": "50"
+    "width": "50",
+    "target": "Nomn"
   },
   {
     "title": "맛집 리스트업",
@@ -17,19 +18,22 @@
       { "text": "\n식당들을 만나보세요!" }
     ],
     "src": "file-text.png",
-    "width": "50"
+    "width": "50",
+    "target": "ListUp"
   },
   {
     "title": "음식 MBTI",
     "parts": [{ "text": "당신의 음식\n취향은?" }],
     "src": "heart.png",
-    "width": "33.33"
+    "width": "33.33",
+    "target": "MbtiTest"
   },
   {
     "title": "음식 닮은꼴 AI 테스트",
     "parts": [{ "text": "자신의 셀카를 업로드하고\n 닮은 음식을 알아보아요!" }],
     "src": "camera.png",
-    "width": "66.66"
+    "width": "66.66",
+    "target": "LookLike"
   },
   {
     "title": "음식 이상형 월드컵",
@@ -40,6 +44,7 @@
     ],
     "src": "crow.png",
     "isBig": true,
-    "width": "100"
+    "width": "100",
+    "target": "IdealtypeWorldcup"
   }
 ]
