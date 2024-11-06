@@ -78,7 +78,7 @@ const StoreItem = ({
           <Image
             key={idx.toString()}
             source={item ?? require("../../assets/images/null_store.png")}
-            className={`${
+            className={`w-24 h-24 ${
               idx === 0
                 ? "rounded-l-xl"
                 : idx === images.length - 1 && "rounded-r-xl"
