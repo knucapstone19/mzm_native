@@ -9,10 +9,10 @@ const CATEGORY_IMAGES = {
   "j-food.png": require("../../assets/images/category/j-food.png"),
   "c-food.png": require("../../assets/images/category/c-food.png"),
   "s-food.png": require("../../assets/images/category/s-food.png"),
+  "w-food.png": require("../../assets/images/category/w-food.png"),
   "chicken.png": require("../../assets/images/category/chicken.png"),
-  "hamburger.png": require("../../assets/images/category/hamburger.png"),
-  "pizza.png": require("../../assets/images/category/pizza.png"),
-  "dessert.png": require("../../assets/images/category/dessert.png"),
+  "fast-food.png": require("../../assets/images/category/fast-food.png"),
+  "etc.png": require("../../assets/images/category/etc.png"),
 };
 
 const CategorySector = () => {
@@ -35,7 +35,7 @@ const CategorySector = () => {
       }}
       className="mt-4 mb-2"
     >
-      <View className="flex-col items-stretch px-4 pt-[14px] pb-4 rounded-[10px] bg-white">
+      <View className="flex-col items-stretch px-3 pt-[14px] pb-4 rounded-[10px] bg-white">
         <Text className={`mb-2 ${styles("main")} text-[#111111]`}>
           메뉴 별 카테고리
         </Text>

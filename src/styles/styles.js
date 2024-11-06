@@ -18,6 +18,7 @@ const styleObj = {
   "12-text":
     "font-korean font-normal text-xs tracking-[0.24px] leading-[16.8px]",
   main: "font-main font-normal text-lg tracking-[-0.36px] leading-[21.6px]",
+  number: "font-number font-normal text-sm tracking-[0.28px] leading-[19.6px]",
 };
 
 const styles = (style) => {

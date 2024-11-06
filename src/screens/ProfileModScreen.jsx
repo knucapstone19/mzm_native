@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -10,12 +10,10 @@ import checkDuplicateName from "../hooks/checkDuplicateName";
 import ProfileModSector from "../ui/ProfileModSector";
 import TopBar from "../components/TopBar";
 import SchoolBottomSheet from "../components/SchoolBottomSheet";
-import styles from "../styles/styles";
 import NavButton from "../components/NavButton";
 
 const ProfileModScreen = ({ route }) => {
   const { profileData } = route.params;
-  console.log(profileData[0]);
   const [schoolData, setSchoolData] = useState([]);
   const [url, setUrl] = useState(profileData[0]);
   const [userName, setUserName] = useState(profileData[1]);

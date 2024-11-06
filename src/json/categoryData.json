@@ -3,8 +3,8 @@
   { "src": "j-food.png", "text": "일식" },
   { "src": "c-food.png", "text": "중식" },
   { "src": "s-food.png", "text": "분식" },
+  { "src": "w-food.png", "text": "양식", "isSmall": true },
   { "src": "chicken.png", "text": "치킨", "isSmall": true },
-  { "src": "hamburger.png", "text": "햄버거" },
-  { "src": "pizza.png", "text": "피자", "isSmall": true },
-  { "src": "dessert.png", "text": "디저트", "isSmall": true }
+  { "src": "fast-food.png", "text": "패스트푸드", "isSmall": true },
+  { "src": "etc.png", "text": "기타", "isSmall": true }
 ]
