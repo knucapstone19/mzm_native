@@ -43,7 +43,7 @@ const ProfileScreen = () => {
         />
         <NavButton
           text="로그아웃"
-          marginBottm={6}
+          marginBottom={6}
           handleNavigate={() => handleLogOut(setIsLoggedOut)}
         />
       </ScrollView>

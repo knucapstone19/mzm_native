@@ -2,16 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { launchImageLibrary } from "react-native-image-picker";
 import patchUser from "../hooks/patchUser";
+import patchImage from "../hooks/patchImage";
 import getSchoolData from "../hooks/getSchoolData";
 import checkDuplicateName from "../hooks/checkDuplicateName";
 import ProfileModSector from "../ui/ProfileModSector";
 import TopBar from "../components/TopBar";
 import SchoolBottomSheet from "../components/SchoolBottomSheet";
 import styles from "../styles/styles";
+import NavButton from "../components/NavButton";
 
 const ProfileModScreen = ({ route }) => {
   const { profileData } = route.params;
+  console.log(profileData[0]);
   const [schoolData, setSchoolData] = useState([]);
   const [url, setUrl] = useState(profileData[0]);
   const [userName, setUserName] = useState(profileData[1]);
@@ -21,9 +25,26 @@ const ProfileModScreen = ({ route }) => {
   const modalizeRef = useRef(null);
   const navigation = useNavigation();
 
+  const handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
+
+    launchImageLibrary(options, (url) => {
+      if (url.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (url.error) {
+        console.log("ImagePicker Error: ", url.error);
+      } else {
+        setUrl(url.assets[0]);
+      }
+    });
+  };
+
   const updateProfile = async () => {
     try {
       await patchUser(userName, school, profileData[1]);
+      await patchImage(profileData[0], url);
       navigation.navigate("Main");
     } catch (error) {
       console.error(error);
@@ -50,24 +71,20 @@ const ProfileModScreen = ({ route }) => {
         <ProfileModSector
           ref={modalizeRef}
           url={url}
+          image={profileData[0]}
+          handleChoosePhoto={handleChoosePhoto}
           userName={userName}
           setUserName={setUserName}
           school={school}
           isDisabled={isDisabled}
           message={message}
         />
-        <TouchableOpacity
-          className={`w-full mt-10 py-3.5 rounded-[10px] ${
-            isDisabled ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
-          }`}
-          onPress={updateProfile}
-          activeOpacity={0.7}
-          disabled={isDisabled}
-        >
-          <Text className={`${styles("16-title")} text-[#FFFFFF] text-center`}>
-            완료
-          </Text>
-        </TouchableOpacity>
+        <NavButton
+          text="완료"
+          widthFull={true}
+          marginTop={10}
+          handleNavigate={updateProfile}
+        />
       </View>
 
       <SchoolBottomSheet

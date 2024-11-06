@@ -18,7 +18,8 @@ const MainTopBar = () => {
       const getSchool = async () => {
         const token = await AsyncStorage.getItem("@user_token");
         const data = await getUser(token);
-        setSchool(data?.user.school.schoolName);
+        const school = data?.user.school.schoolName.slice(0, -2);
+        setSchool(school);
       };
       getSchool();
     }, [])

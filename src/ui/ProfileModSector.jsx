@@ -3,16 +3,34 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 
 const ProfileModSector = (
-  { url, userName, setUserName, school, isDisabled, message },
+  {
+    url,
+    image,
+    handleChoosePhoto,
+    userName,
+    setUserName,
+    school,
+    isDisabled,
+    message,
+  },
   ref
 ) => {
   return (
     <>
       <TouchableOpacity
         className="rounded-full border-4 border-white"
+        onPress={handleChoosePhoto}
         activeOpacity={0.7}
       >
-        <Image source={{ uri: url }} className="w-28 h-28 rounded-full" />
+        <Image
+          source={{
+            uri:
+              url !== image
+                ? url.uri
+                : `http://211.243.47.122:3005/user/profile-image?path=${image}`,
+          }}
+          className="w-28 h-28 rounded-full"
+        />
       </TouchableOpacity>
 
       <View className="w-full mt-10">

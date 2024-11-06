@@ -4,7 +4,7 @@ import styles from "../styles/styles";
 const CategoryItem = ({ idx, src, text, isSmall, margin = 2 }) => {
   return (
     <TouchableOpacity
-      key={idx.toString()}
+      key={idx?.toString()}
       className={`flex-col items-center ${margin === 2 ? "mx-2" : "mx-2.5"}`}
       onPress={() => console.log(text)}
       activeOpacity={0.7}

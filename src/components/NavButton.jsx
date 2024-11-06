@@ -4,12 +4,16 @@ import styles from "../styles/styles";
 const NavButton = ({
   text,
   isDisabled = false,
-  marginBottm = null,
+  widthFull = false,
+  marginTop = null,
+  marginBottom = null,
   handleNavigate,
 }) => {
   return (
     <TouchableOpacity
-      className={`mb-${marginBottm} py-3.5 rounded-[10px] ${
+      className={`${
+        widthFull && "w-full"
+      } mt-${marginTop} mb-${marginBottom} py-3.5 rounded-[10px] ${
         isDisabled ? "bg-[#B0B0B0]" : "bg-[#FF8800]"
       }`}
       onPress={handleNavigate}
