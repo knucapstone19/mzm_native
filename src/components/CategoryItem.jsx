@@ -10,17 +10,21 @@ const CategoryItem = ({
   isSelected = null,
   setIsSelected = () => {},
   margin = 2,
+  handleScroll = () => {},
 }) => {
   const navigation = useNavigation();
+
+  const handleNavigate = () => {
+    handleScroll(idx);
+    navigation.navigate("Category", { idx, category: text });
+    setIsSelected(text);
+  };
 
   return (
     <TouchableOpacity
       key={idx?.toString()}
       className={`flex-col items-center ${margin === 2 ? "mx-2" : "mx-2.5"}`}
-      onPress={() => {
-        navigation.navigate("Category", { category: text });
-        setIsSelected(text);
-      }}
+      onPress={handleNavigate}
       activeOpacity={0.7}
     >
       <View

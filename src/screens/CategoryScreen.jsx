@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,9 +23,10 @@ const CATEGORY_IMAGES = {
 };
 
 const CategoryScreen = ({ route }) => {
-  const { category } = route.params;
+  const { idx, category } = route.params;
   const [categoryName, setCategoryName] = useState(category);
   const [storeArray, setStoreArray] = useState(null);
+  const scrollRef = useRef(null);
   const navigation = useNavigation();
 
   const categoryData = CategoryData.map((item) => ({
@@ -33,8 +34,20 @@ const CategoryScreen = ({ route }) => {
     src: CATEGORY_IMAGES[item.src],
   }));
 
+  const handleScroll = (idx) => {
+    scrollRef.current.scrollToIndex({
+      index: idx,
+      animated: true,
+    });
+  };
+
+  useEffect(() => {
+    handleScroll(idx);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
+      setStoreArray(null);
       const token = await AsyncStorage.getItem("@user_token");
       const data = await getUser(token);
       const location = [data?.user.school.lat, data?.user.school.lng];
@@ -61,6 +74,7 @@ const CategoryScreen = ({ route }) => {
       />
       <View>
         <FlatList
+          ref={scrollRef}
           data={categoryData}
           className="mb-0.5 py-2 bg-white"
           renderItem={({ item, index }) => (
@@ -72,9 +86,15 @@ const CategoryScreen = ({ route }) => {
               isSelected={categoryName}
               setIsSelected={setCategoryName}
               margin={2.5}
+              handleScroll={handleScroll}
             />
           )}
           keyExtractor={(_, idx) => idx.toString()}
+          getItemLayout={(_, index) => ({
+            length: 68,
+            offset: 68 * index,
+            index,
+          })}
           horizontal={true}
           overScrollMode="never"
           showsHorizontalScrollIndicator={false}
