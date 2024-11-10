@@ -4,14 +4,14 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swiper from "react-native-deck-swiper";
 import getUser from "../hooks/getUser";
-import getRandomStore from "../hooks/getRandomStore";
+import getStore from "../hooks/getStore";
 import CardItem from "../ui/CardItem";
 import TopBar from "../components/TopBar";
 import WarningIcon from "../../assets/images/icons/warning.svg";
 import styles from "../styles/styles";
 
 const NomnScreen = () => {
-  const [store, setStore] = useState(null);
+  const [storeArray, setStoreArray] = useState(null);
   const [isAllSwiped, setIsAllSwiped] = useState(false);
   const navigation = useNavigation();
 
@@ -22,13 +22,13 @@ const NomnScreen = () => {
       const location = [data?.user.school.lat, data?.user.school.lng];
 
       let storeData = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i <= 5; i++) {
         const randomPage = Math.floor(Math.random() * 3) + 1;
         const randomIdx = Math.floor(Math.random() * 15) + 1;
-        const randomData = await getRandomStore(location, randomPage);
+        const randomData = await getStore(location, randomPage);
         storeData = [...storeData, randomData[randomIdx]];
       }
-      setStore(storeData);
+      setStoreArray(storeData);
     };
     fetchData();
   }, []);
@@ -42,12 +42,12 @@ const NomnScreen = () => {
         handleBack={() => navigation.goBack()}
       />
       <View className="flex-1 bg-[#FAFAFA]">
-        {store ? (
+        {storeArray ? (
           !isAllSwiped ? (
             <Swiper
-              cards={store}
-              renderCard={(store) => {
-                return <CardItem data={store} />;
+              cards={storeArray}
+              renderCard={(storeArray) => {
+                return <CardItem data={storeArray} />;
               }}
               cardStyle={{ height: "80%" }}
               backgroundColor={"#FAFAFA"}

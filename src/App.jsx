@@ -10,6 +10,7 @@ import TabBar from "./ui/TabBar";
 import SettingScreen from "./screens/SettingScreen";
 import CategoryScreen from "./screens/CategoryScreen";
 import NomnScreen from "./screens/NomnScreen";
+import ListUpScreen from "./screens/ListUpScreen";
 import MbtiTestScreen from "./screens/MbtiTestScreen";
 import MbtiResScreen from "./screens/MbtiResScreen";
 import ProfileModScreen from "./screens/ProfileModScreen";
@@ -28,6 +29,7 @@ const App = () => {
           <Stack.Screen name="Setting" component={SettingScreen} />
           <Stack.Screen name="Category" component={CategoryScreen} />
           <Stack.Screen name="Nomn" component={NomnScreen} />
+          <Stack.Screen name="ListUp" component={ListUpScreen} />
           <Stack.Screen name="MbtiTest" component={MbtiTestScreen} />
           <Stack.Screen name="MbtiRes" component={MbtiResScreen} />
           <Stack.Screen name="ProfileMod" component={ProfileModScreen} />

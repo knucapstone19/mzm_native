@@ -3,7 +3,7 @@ import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getUser from "../hooks/getUser";
-import getStoreData from "../hooks/getStoreData";
+import getCategoryStore from "../hooks/getCategoryStore";
 import TopBar from "../components/TopBar";
 import CategoryItem from "../components/CategoryItem";
 import StoreItem from "../components/StoreItem";
@@ -49,15 +49,13 @@ const CategoryScreen = ({ route }) => {
     const fetchData = async () => {
       setStoreArray(null);
       const token = await AsyncStorage.getItem("@user_token");
-      const data = await getUser(token);
-      const location = [data?.user.school.lat, data?.user.school.lng];
+      const userData = await getUser(token);
+      const location = [userData?.user.school.lat, userData?.user.school.lng];
 
       let storeData = [];
       for (let page = 1; page <= 3; page++) {
-        storeData = [
-          ...storeData,
-          ...(await getStoreData(location, category, page)),
-        ];
+        const pageData = await getCategoryStore(location, category, page);
+        storeData = [...storeData, ...pageData];
       }
       setStoreArray(storeData);
     };

@@ -1,4 +1,4 @@
-const getStoreData = async (location, category, page) => {
+const getCategoryStore = async (location, category, page) => {
   try {
     const res = await fetch(
       `http://211.243.47.122:3005/store/search?latitude=${location[0]}&longitude=${location[1]}&page=${page}`
@@ -23,4 +23,4 @@ const getStoreData = async (location, category, page) => {
   }
 };
 
-export default getStoreData;
+export default getCategoryStore;
