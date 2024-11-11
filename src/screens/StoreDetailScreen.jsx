@@ -154,7 +154,7 @@ const StoreDetailScreen = ({ route }) => {
               </Text>
               <TouchableOpacity
                 className="flex-row justify-around mt-4 mb-10 py-2"
-                //   onPress={}
+                onPress={() => navigation.navigate("Review", { storeId })}
                 activeOpacity={0.8}
               >
                 {Array.from({ length: 5 }, (_, idx) => (
