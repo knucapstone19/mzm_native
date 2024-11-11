@@ -1,4 +1,5 @@
-import { Image, Text, View } from "react-native";
+import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import LocationIcon from "../../assets/images/icons/location.svg";
 import FullStarIcon from "../../assets/images/icons/full_star.svg";
 import HalfStarIcon from "../../assets/images/icons/half_star.svg";
@@ -6,6 +7,7 @@ import EmptyStarIcon from "../../assets/images/icons/empty_star.svg";
 import styles from "../styles/styles";
 
 const SmallStoreItem = ({
+  storeId,
   storeImage,
   storeName,
   rating,
@@ -13,12 +15,22 @@ const SmallStoreItem = ({
   category,
   address,
 }) => {
+  const navigation = useNavigation();
   const intCount = ~~rating;
   const halfCount = rating % 1 && 1;
   const emptyCount = 5 - intCount - halfCount;
 
   return (
-    <View className="flex-row mb-12 space-x-3 px-4 pt-[14px] pb-4 rounded-[10px] bg-white">
+    <TouchableOpacity
+      style={{
+        width: Dimensions.get("window").width - 48,
+        elevation: 1,
+        borderRadius: 10,
+      }}
+      className="flex-row mb-12 space-x-3 px-4 pt-[14px] pb-4 rounded-[10px] bg-white"
+      onPress={() => navigation.navigate("StoreDetail", { storeId })}
+      activeOpacity={0.9}
+    >
       <Image
         source={storeImage ?? require("../../assets/images/null_store.png")}
         className="w-[100px] h-[100px] rounded-md"
@@ -60,7 +72,7 @@ const SmallStoreItem = ({
           {address}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -171,6 +171,7 @@ const SearchScreen = () => {
             data={matchArray}
             renderItem={({ item, index }) => (
               <SmallStoreItem
+                storeId={item.storeId}
                 storeImage={item.storeImage}
                 storeName={item.placeName}
                 rating={item.rating}

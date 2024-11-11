@@ -46,9 +46,20 @@ const NomnScreen = () => {
           !isAllSwiped ? (
             <Swiper
               cards={storeArray}
-              renderCard={(storeArray) => {
-                return <CardItem data={storeArray} />;
+              renderCard={(item) => {
+                return (
+                  <CardItem
+                    storeId={item?.storeId}
+                    storeName={item?.placeName}
+                    rating={item?.rating}
+                    reviewCount={item?.reviewCount}
+                    category={item?.categoryName}
+                    address={item?.addressName}
+                    storeImage={item?.storeImage}
+                  />
+                );
               }}
+              // containerStyle={{ bgColor: "black" }}
               cardStyle={{ height: "80%" }}
               backgroundColor={"#FAFAFA"}
               onSwipedAll={() => setIsAllSwiped(true)}

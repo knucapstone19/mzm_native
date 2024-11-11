@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import getLiked from "../hooks/getLiked";
+import postLiked from "../hooks/postLiked";
+import deleteLiked from "../hooks/deleteLiked";
 import LocationIcon from "../../assets/images/icons/location.svg";
 import UnlikedIcon from "../../assets/images/icons/unliked.svg";
 import LikedIcon from "../../assets/images/icons/liked.svg";
@@ -9,22 +13,49 @@ import EmptyStarIcon from "../../assets/images/icons/empty_star.svg";
 import styles from "../styles/styles";
 
 const StoreItem = ({
+  storeId,
   storeName,
-  liked,
   rating,
   reviewCount,
   category,
   address,
   storeImage,
 }) => {
-  const [isLiked, setIsLiked] = useState(liked);
+  const [isLiked, setIsLiked] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
   const intCount = ~~rating;
   const halfCount = rating % 1 && 1;
   const emptyCount = 5 - intCount - halfCount;
   const images = storeImage ?? new Array(4).fill(null);
 
+  const handleToggle = () => {
+    setIsLoading(false);
+    setIsLiked((isLiked) => !isLiked);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getLiked(storeId);
+      setIsLiked(data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const patchLiked = async () => {
+      if (isLiked && !isLoading) await postLiked(storeId);
+      else if (isLiked === false && !isLoading) await deleteLiked(storeId);
+    };
+    patchLiked();
+  }, [isLiked, isLoading]);
+
   return (
-    <View className="p-4 bg-white">
+    <TouchableOpacity
+      className="p-4 bg-white"
+      onPress={() => navigation.navigate("StoreDetail", { storeId })}
+      activeOpacity={0.9}
+    >
       <View className="flex-row justify-between items-center">
         <View className="flex-row items-center space-x-2">
           <LocationIcon />
@@ -32,10 +63,9 @@ const StoreItem = ({
             {storeName}
           </Text>
         </View>
-        {/* TODO: 애니메이션 주기 */}
         <TouchableOpacity
           className="mt-0.5"
-          onPress={() => setIsLiked((isLiked) => !isLiked)}
+          onPress={handleToggle}
           activeOpacity={0.7}
         >
           {isLiked ? <LikedIcon /> : <UnlikedIcon />}
@@ -86,7 +116,7 @@ const StoreItem = ({
           />
         ))}
       </ScrollView>
-    </View>
+    </TouchableOpacity>
   );
 };
 

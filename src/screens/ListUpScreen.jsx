@@ -85,8 +85,8 @@ const ListUpScreen = () => {
             data={storeArray}
             renderItem={({ item, index }) => (
               <StoreItem
+                storeId={item.storeId}
                 storeName={item.placeName}
-                liked={item.liked}
                 rating={item.rating}
                 reviewCount={item.reviewCount}
                 category={item.categoryName}

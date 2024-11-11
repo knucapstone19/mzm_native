@@ -13,6 +13,7 @@ import NomnScreen from "./screens/NomnScreen";
 import ListUpScreen from "./screens/ListUpScreen";
 import MbtiTestScreen from "./screens/MbtiTestScreen";
 import MbtiResScreen from "./screens/MbtiResScreen";
+import StoreDetailScreen from "./screens/StoreDetailScreen";
 import ProfileModScreen from "./screens/ProfileModScreen";
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ const App = () => {
           <Stack.Screen name="ListUp" component={ListUpScreen} />
           <Stack.Screen name="MbtiTest" component={MbtiTestScreen} />
           <Stack.Screen name="MbtiRes" component={MbtiResScreen} />
+          <Stack.Screen name="StoreDetail" component={StoreDetailScreen} />
           <Stack.Screen name="ProfileMod" component={ProfileModScreen} />
         </Stack.Navigator>
       </NavigationContainer>
