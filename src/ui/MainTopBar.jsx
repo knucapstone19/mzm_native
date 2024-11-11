@@ -41,10 +41,12 @@ const MainTopBar = () => {
           <MenuIcon />
         </TouchableOpacity>
       </View>
-      <SearchBar
-        ref={searchBarRef}
-        handlePress={() => navigation.navigate("Search")}
-      />
+      <View className="items-center">
+        <SearchBar
+          ref={searchBarRef}
+          handlePress={() => navigation.navigate("Search")}
+        />
+      </View>
     </View>
   );
 };

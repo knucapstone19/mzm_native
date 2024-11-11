@@ -11,11 +11,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import getUser from "../hooks/getUser";
 import getStore from "../hooks/getStore";
+import FilterBottomSheet from "../ui/FilterBottomSheet";
 import TopBar from "../components/TopBar";
 import StoreItem from "../components/StoreItem";
 import FilterIcon from "../../assets/images/icons/filter.svg";
+import WarningIcon from "../../assets/images/icons/warning.svg";
 import styles from "../styles/styles";
-import FilterBottomSheet from "../ui/FilterBottomSheet";
 
 const ListUpScreen = () => {
   const [school, setSchool] = useState(null);
