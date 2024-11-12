@@ -8,12 +8,14 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopBar from "../components/TopBar";
 import MbtiQuestion from "../components/MbtiQuestion";
 import ContentButton from "../components/ContentButton";
 import MbtiQData from "../json/mbtiQData.json";
 import MbtiRData from "../json/mbtiRData.json";
 import styles from "../styles/styles";
+import postMbtiHistory from "../hooks/postMbtiHistory";
 
 const MbtiTestScreen = () => {
   const [resArray, setResArray] = useState(
@@ -33,7 +35,6 @@ const MbtiTestScreen = () => {
         : propVal.set(key, val);
     });
 
-    // TODO: 음식 MBTI 활동 내역 서버에 patch할 예정 (백엔드 기능 구현 아직)
     return `${propVal.get("맵") > 0 ? "맵" : "순"}${
       propVal.get("짠") > 0 ? "짠" : "싱"
     }${propVal.get("달") > 0 ? "달" : "씀"}${
@@ -41,8 +42,11 @@ const MbtiTestScreen = () => {
     }`;
   };
 
-  const handleNavigate = () => {
+  const handleNavigate = async () => {
     setIsLoading(true);
+
+    const resType = resData();
+    await postMbtiHistory(resType);
 
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -57,6 +61,27 @@ const MbtiTestScreen = () => {
       }, 3000);
     });
   };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = await AsyncStorage.getItem("@user_token");
+  //     try {
+  //       const res = await fetch(`http://211.243.47.122:3005/mbti/history`, {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+
+  //       const data = await res.json();
+  //       console.log(data);
+  //     } catch (e) {
+  //       console.error(e.message);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     let isNotSelected = resArray.filter((res) => res === undefined).length;

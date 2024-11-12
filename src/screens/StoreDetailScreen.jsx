@@ -17,10 +17,6 @@ import styles from "../styles/styles";
 const StoreDetailScreen = ({ route }) => {
   const { storeId } = route.params;
   const [store, setStore] = useState(null);
-  const [intCount, setIntCount] = useState(0);
-  const [halfCount, setHalfCount] = useState(0);
-  const [emptyCount, setEmptyCount] = useState(5);
-  const [images, setImages] = useState(null);
   const [isLiked, setIsLiked] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
@@ -32,29 +28,13 @@ const StoreDetailScreen = ({ route }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(store);
-      console.log(storeId);
       const storeData = await getStoreDetail(storeId);
       const likedData = await getLiked(storeId);
-      // console.log(storeData);
       setStore(storeData);
       setIsLiked(likedData);
-
-      // const res = await fetch(
-      //   `http://211.243.47.122:3005/store/${storeId}/review`
-      // );
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (store) {
-      setIntCount(~~store.rates);
-      setHalfCount(store.rates % 1 && 1);
-      setEmptyCount(5 - intCount - halfCount);
-      setImages(store.storeImage ?? new Array(4).fill(null));
-    }
-  }, [store]);
 
   useEffect(() => {
     const patchLiked = async () => {
@@ -76,12 +56,13 @@ const StoreDetailScreen = ({ route }) => {
         overScrollMode="never"
         showsVerticalScrollIndicator={false}
       >
-        {store && images && (
+        {store && (
           <View className="flex-1">
             <Image
               source={
-                store?.storeImage ??
-                require("../../assets/images/null_store.png")
+                store?.storeImage
+                  ? { uri: store?.storeImage[0] }
+                  : require("../../assets/images/null_store.png")
               }
               className="w-screen h-48"
             />
@@ -101,15 +82,18 @@ const StoreDetailScreen = ({ route }) => {
                     : store.rates}
                 </Text>
                 <View className="flex-row space-x-0.5">
-                  {Array.from({ length: intCount }, (_, idx) => (
+                  {Array.from({ length: ~~store.rates }, (_, idx) => (
                     <FullStarIcon key={idx.toString()} />
                   ))}
-                  {Array.from({ length: halfCount }, (_, idx) => (
+                  {Array.from({ length: store.rates % 1 && 1 }, (_, idx) => (
                     <HalfStarIcon key={idx.toString()} />
                   ))}
-                  {Array.from({ length: emptyCount }, (_, idx) => (
-                    <EmptyStarIcon key={idx.toString()} />
-                  ))}
+                  {Array.from(
+                    { length: 5 - ~~store.rates - (store.rates % 1 && 1) },
+                    (_, idx) => (
+                      <EmptyStarIcon key={idx.toString()} />
+                    )
+                  )}
                 </View>
                 <Text className={`${styles("number")} text-[#A9A9A9]`}>
                   ({store.reviewCount}건)
@@ -130,16 +114,19 @@ const StoreDetailScreen = ({ route }) => {
                   showsHorizontalScrollIndicator={false}
                   className="mt-4 space-x-2"
                 >
-                  {images.map((item, idx) => (
+                  {store.storeImage.map((item, idx) => (
                     <Image
                       key={idx.toString()}
                       source={
-                        item ?? require("../../assets/images/null_store.png")
+                        item
+                          ? { uri: item }
+                          : require("../../assets/images/null_store.png")
                       }
                       className={`w-24 h-24 ${
                         idx === 0
                           ? "rounded-l-xl"
-                          : idx === images.length - 1 && "rounded-r-xl"
+                          : idx === store.storeImage.length - 1 &&
+                            "rounded-r-xl"
                       }`}
                     />
                   ))}

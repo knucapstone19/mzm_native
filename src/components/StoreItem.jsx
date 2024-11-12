@@ -24,10 +24,6 @@ const StoreItem = ({
   const [isLiked, setIsLiked] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  const intCount = ~~rating;
-  const halfCount = rating % 1 && 1;
-  const emptyCount = 5 - intCount - halfCount;
-  const images = storeImage ?? new Array(4).fill(null);
 
   const handleToggle = () => {
     setIsLoading(false);
@@ -76,15 +72,18 @@ const StoreItem = ({
           {Number.isInteger(rating) ? rating.toFixed(1) : rating}
         </Text>
         <View className="flex-row space-x-0.5">
-          {Array.from({ length: intCount }, (_, idx) => (
+          {Array.from({ length: ~~rating }, (_, idx) => (
             <FullStarIcon key={idx.toString()} />
           ))}
-          {Array.from({ length: halfCount }, (_, idx) => (
+          {Array.from({ length: rating % 1 && 1 }, (_, idx) => (
             <HalfStarIcon key={idx.toString()} />
           ))}
-          {Array.from({ length: emptyCount }, (_, idx) => (
-            <EmptyStarIcon key={idx.toString()} />
-          ))}
+          {Array.from(
+            { length: 5 - ~~rating - (rating % 1 && 1) },
+            (_, idx) => (
+              <EmptyStarIcon key={idx.toString()} />
+            )
+          )}
         </View>
         <Text className={`${styles("number")} text-[#A9A9A9]`}>
           ({reviewCount}건)
@@ -102,23 +101,28 @@ const StoreItem = ({
         horizontal={true}
         overScrollMode="never"
         showsHorizontalScrollIndicator={false}
-        className="mt-4 space-x-2"
+        className="mt-4"
       >
-        {images.map((item, idx) => (
-          <Image
-            key={idx.toString()}
-            source={
-              item
-                ? { uri: item }
-                : require("../../assets/images/null_store.png")
-            }
-            className={`w-24 h-24 ${
-              idx === 0
-                ? "rounded-l-xl"
-                : idx === images.length - 1 && "rounded-r-xl"
-            }`}
-          />
-        ))}
+        <View
+          className="flex-row space-x-2"
+          onStartShouldSetResponder={() => true}
+        >
+          {storeImage.map((item, idx) => (
+            <Image
+              key={idx.toString()}
+              source={
+                item
+                  ? { uri: item }
+                  : require("../../assets/images/null_store.png")
+              }
+              className={`w-24 h-24 ${
+                idx === 0
+                  ? "rounded-l-xl"
+                  : idx === storeImage.length - 1 && "rounded-r-xl"
+              }`}
+            />
+          ))}
+        </View>
       </ScrollView>
     </TouchableOpacity>
   );

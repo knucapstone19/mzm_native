@@ -24,7 +24,7 @@ const NomnScreen = () => {
       let storeData = [];
       for (let i = 1; i <= 5; i++) {
         const randomPage = Math.floor(Math.random() * 3) + 1;
-        const randomIdx = Math.floor(Math.random() * 15) + 1;
+        const randomIdx = Math.floor(Math.random() * 15);
         const randomData = await getStore(location, randomPage);
         storeData = [...storeData, randomData[randomIdx]];
       }

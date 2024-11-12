@@ -1,12 +1,12 @@
+import { useEffect, useRef, useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import postReview from "../hooks/postReview";
 import TopBar from "../components/TopBar";
+import NavButton from "../components/NavButton";
 import FullStarIcon from "../../assets/images/icons/full_star.svg";
 import EmptyStarIcon from "../../assets/images/icons/empty_star.svg";
 import styles from "../styles/styles";
-import { useEffect, useRef, useState } from "react";
-import NavButton from "../components/NavButton";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ReviewScreen = ({ route }) => {
   const { storeId } = route.params;
@@ -15,7 +15,13 @@ const ReviewScreen = ({ route }) => {
   const inputRef = useRef(null);
   const navigation = useNavigation();
 
+  const handlePost = async () => {
+    await postReview(storeId, rating, text);
+    navigation.goBack();
+  };
+
   useEffect(() => {
+    console.log(storeId);
     console.log(text);
     console.log(rating.filter((v) => v).length);
     // console.log(rating.filter((v) => !v).length);
@@ -84,27 +90,7 @@ const ReviewScreen = ({ route }) => {
           text="완료"
           isDisabled={!rating.filter((v) => v).length || !text}
           marginBottom={4}
-          handleNavigate={async () => {
-            const token = await AsyncStorage.getItem("@user_token");
-            const res = await fetch(
-              `http://211.243.47.122:3005/store/${storeId}/review`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  content: text,
-                  rate: rating.filter((v) => v).length,
-                }),
-              }
-            );
-            const data = await res.json();
-            console.log(data);
-
-            navigation.goBack();
-          }}
+          handleNavigate={handlePost}
         />
       </View>
     </View>
