@@ -13,7 +13,7 @@ const TopBar = ({
       className={`flex-row ${
         !isBack ? "justify-center" : "justify-between"
       } items-center w-full h-14 px-6 ${
-        title ? "border-b-[1px] border-[#D3D3D3]" : null
+        title && "border-b-[1px] border-[#D3D3D3]"
       } bg-${bgColor}`}
     >
       {isBack && (

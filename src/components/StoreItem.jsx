@@ -35,6 +35,8 @@ const StoreItem = ({
   };
 
   useEffect(() => {
+    // console.log(storeImage);
+    console.log(images);
     const fetchData = async () => {
       const data = await getLiked(storeId);
       setIsLiked(data);
@@ -107,7 +109,11 @@ const StoreItem = ({
         {images.map((item, idx) => (
           <Image
             key={idx.toString()}
-            source={item ?? require("../../assets/images/null_store.png")}
+            source={
+              item
+                ? { uri: item }
+                : require("../../assets/images/null_store.png")
+            }
             className={`w-24 h-24 ${
               idx === 0
                 ? "rounded-l-xl"

@@ -34,6 +34,7 @@ const StoreDetailScreen = ({ route }) => {
     const fetchData = async () => {
       const storeData = await getStoreDetail(storeId);
       const likedData = await getLiked(storeId);
+      // console.log(storeData);
       setStore(storeData);
       setIsLiked(likedData);
     };
@@ -42,8 +43,8 @@ const StoreDetailScreen = ({ route }) => {
 
   useEffect(() => {
     if (store) {
-      setIntCount(~~store.rating);
-      setHalfCount(store.rating % 1 && 1);
+      setIntCount(~~store.rates);
+      setHalfCount(store.rates % 1 && 1);
       setEmptyCount(5 - intCount - halfCount);
       setImages(store.storeImage ?? new Array(4).fill(null));
     }
