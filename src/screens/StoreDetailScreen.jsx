@@ -168,7 +168,7 @@ const StoreDetailScreen = ({ route }) => {
                 AI로 요약된 리뷰이므로 부정확한 정보가 있을 수 있는 점 양해
                 부탁드립니다.
               </Text>
-              <View className="mt-6 space-y-4">
+              <View className="mt-2">
                 <ReviewSummary
                   src={require("../../assets/images/3d/thumb-up.png")}
                   title="긍정 리뷰 요약"
