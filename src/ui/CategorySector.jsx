@@ -61,9 +61,9 @@ const CategorySector = () => {
             key={"$"}
             className="self-center"
             data={categoryData}
-            renderItem={({ item, idx }) => (
+            renderItem={({ item, index }) => (
               <CategoryItem
-                idx={idx}
+                idx={index}
                 src={item.src}
                 text={item.text}
                 isSmall={item.isSmall}

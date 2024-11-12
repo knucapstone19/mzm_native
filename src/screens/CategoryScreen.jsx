@@ -35,10 +35,12 @@ const CategoryScreen = ({ route }) => {
   }));
 
   const handleScroll = (idx) => {
-    scrollRef.current.scrollToIndex({
-      index: idx,
-      animated: true,
-    });
+    if (categoryData.length > idx) {
+      scrollRef.current.scrollToIndex({
+        index: idx,
+        animated: true,
+      });
+    }
   };
 
   useEffect(() => {
