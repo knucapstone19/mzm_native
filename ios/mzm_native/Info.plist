@@ -47,6 +47,14 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>앱에서 사진에 접근하기 위해 권한이 필요합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>앱에서 사진을 저장하기 위해 권한이 필요합니다.</string>
+	<key>NSDocumentsDirectory</key>
+	<string>앱에서 파일을 저장하기 위해 권한이 필요합니다.</string>
+	<key>NSFileProtectionComplete</key>
+	<string>앱에서 파일을 안전하게 보호하기 위해 권한이 필요합니다.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
