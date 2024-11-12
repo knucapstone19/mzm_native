@@ -32,6 +32,23 @@ const StoreDetailScreen = ({ route }) => {
       const likedData = await getLiked(storeId);
       setStore(storeData);
       setIsLiked(likedData);
+
+      try {
+        const res = await fetch(`http://211.243.47.122:3005/contents/review`, {
+          method: "POST",
+          body: JSON.stringify({
+            content: [
+              "분위기가 좋고 맛도 좋습니다.",
+              "양도 많고 사장님이 친절해요.",
+              "가끔 비위생적일 때가 있어요.",
+              "아이 데려오기 너무 좋아요",
+            ],
+          }),
+        });
+        const data = await res.json();
+      } catch (e) {
+        console.error(e.message);
+      }
     };
     fetchData();
   }, []);

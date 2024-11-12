@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import WebView from "react-native-webview";
+import DeviceInfo from "react-native-device-info";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
+import getUser from "../hooks/getUser";
 import TopBar from "../components/TopBar";
 import LoginButton from "../components/LoginButton";
 import SplashLogo from "../../assets/images/icons/splash_logo.svg";
 import SocialData from "../json/socialData.json";
-import getUser from "../hooks/getUser";
 
 const SOCIAL_IMAGES = {
   "kakao.png": require("../../assets/images/social/kakao.png"),
@@ -23,7 +24,6 @@ const SOCIAL_IMAGES = {
   "google.png": require("../../assets/images/social/google.png"),
 };
 
-// TODO: 로그인 로직과 모달 로직 분리 고려
 const LoginScreen = () => {
   const [showWebview, setShowWebview] = useState(false);
   const [regId, setRegId] = useState("");
@@ -138,10 +138,13 @@ const LoginScreen = () => {
           <TopBar isBack={true} handleBack={() => setShowWebview(false)} />
           <WebView
             source={{
-              uri: `http://211.243.47.122:3005/oauth2/authorization/${regId}`,
+              uri: `http://${
+                regId === "google" ? "yoonnus.store" : "211.243.47.122"
+              }:3005/oauth2/authorization/${regId}`,
             }}
             onNavigationStateChange={handleNavigate}
             startInLoadingState={true}
+            userAgent={DeviceInfo.getUserAgent() + "-kwdApp-"}
           />
         </View>
       </Modal>
