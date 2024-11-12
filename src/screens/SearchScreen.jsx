@@ -59,7 +59,6 @@ const SearchScreen = () => {
           const pageData = await getStore(location, page);
           storeData = [...storeData, ...pageData];
         }
-        console.log("a", storeData);
         setStoreArray(storeData);
       }
     };

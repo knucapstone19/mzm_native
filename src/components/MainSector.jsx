@@ -15,7 +15,9 @@ const MainSector = ({ idx, title, parts, src, isBig, width, target }) => {
           elevation: 1,
         }}
         className="h-[104px] px-4 pt-[14px] pb-3 relative overflow-hidden rounded-[10px] bg-white"
-        onPress={() => navigation.navigate(target)}
+        onPress={() => {
+          if (target !== "IdealtypeWorldcup") navigation.navigate(target);
+        }}
         activeOpacity={0.9}
       >
         <View className="flex-row">

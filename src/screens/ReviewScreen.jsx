@@ -20,13 +20,6 @@ const ReviewScreen = ({ route }) => {
     navigation.goBack();
   };
 
-  useEffect(() => {
-    console.log(storeId);
-    console.log(text);
-    console.log(rating.filter((v) => v).length);
-    // console.log(rating.filter((v) => !v).length);
-  }, [rating]);
-
   return (
     <View className="flex-1 bg-[#FAFAFA]">
       <TopBar isBack={true} handleBack={() => navigation.goBack()} />
