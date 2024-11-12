@@ -35,8 +35,6 @@ const StoreItem = ({
   };
 
   useEffect(() => {
-    // console.log(storeImage);
-    console.log(images);
     const fetchData = async () => {
       const data = await getLiked(storeId);
       setIsLiked(data);

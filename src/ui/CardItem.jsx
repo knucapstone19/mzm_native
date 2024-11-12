@@ -27,7 +27,6 @@ const CardItem = ({
   const intCount = ~~rating;
   const halfCount = rating % 1 && 1;
   const emptyCount = 5 - intCount - halfCount;
-  const images = storeImage ?? new Array(4).fill(null);
 
   const handleToggle = () => {
     setIsLoading(false);
@@ -35,6 +34,7 @@ const CardItem = ({
   };
 
   useEffect(() => {
+    console.log(storeImage);
     const fetchData = async () => {
       const data = await getLiked(storeId);
       setIsLiked(data);
@@ -57,7 +57,11 @@ const CardItem = ({
       activeOpacity={0.9}
     >
       <ImageBackground
-        source={images[0] ?? require("../../assets/images/null_store.png")}
+        source={
+          storeImage
+            ? { uri: storeImage[0] }
+            : require("../../assets/images/null_store.png")
+        }
         imageStyle={{ borderRadius: 20 }}
         className="flex-1 justify-end p-4"
       >

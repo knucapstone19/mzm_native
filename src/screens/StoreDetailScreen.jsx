@@ -32,11 +32,17 @@ const StoreDetailScreen = ({ route }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(store);
+      console.log(storeId);
       const storeData = await getStoreDetail(storeId);
       const likedData = await getLiked(storeId);
       // console.log(storeData);
       setStore(storeData);
       setIsLiked(likedData);
+
+      // const res = await fetch(
+      //   `http://211.243.47.122:3005/store/${storeId}/review`
+      // );
     };
     fetchData();
   }, []);

@@ -5,10 +5,10 @@ import { WebView } from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getUser from "../hooks/getUser";
 import getStore from "../hooks/getStore";
+import SmallStoreItem from "../ui/SmallStoreItem";
 import SearchBar from "../components/SearchBar";
 import WarningIcon from "../../assets/images/icons/warning.svg";
 import styles from "../styles/styles";
-import SmallStoreItem from "../ui/SmallStoreItem";
 
 const SearchScreen = () => {
   const [searchText, setSearchText] = useState(null);
@@ -20,7 +20,7 @@ const SearchScreen = () => {
   const searchBarRef = useRef(null);
 
   useEffect(() => {
-    if (searchText) {
+    if (searchText && storeArray) {
       const searchPattern = new RegExp(searchText, "i");
 
       let matchArray = [];
@@ -59,6 +59,7 @@ const SearchScreen = () => {
           const pageData = await getStore(location, page);
           storeData = [...storeData, ...pageData];
         }
+        console.log("a", storeData);
         setStoreArray(storeData);
       }
     };

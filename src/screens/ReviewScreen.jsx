@@ -6,6 +6,7 @@ import EmptyStarIcon from "../../assets/images/icons/empty_star.svg";
 import styles from "../styles/styles";
 import { useEffect, useRef, useState } from "react";
 import NavButton from "../components/NavButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ReviewScreen = ({ route }) => {
   const { storeId } = route.params;
@@ -15,8 +16,9 @@ const ReviewScreen = ({ route }) => {
   const navigation = useNavigation();
 
   useEffect(() => {
+    console.log(text);
     console.log(rating.filter((v) => v).length);
-    console.log(rating.filter((v) => !v).length);
+    // console.log(rating.filter((v) => !v).length);
   }, [rating]);
 
   return (
@@ -82,7 +84,27 @@ const ReviewScreen = ({ route }) => {
           text="완료"
           isDisabled={!rating.filter((v) => v).length || !text}
           marginBottom={4}
-          handleNavigate={() => navigation.goBack()}
+          handleNavigate={async () => {
+            const token = await AsyncStorage.getItem("@user_token");
+            const res = await fetch(
+              `http://211.243.47.122:3005/store/${storeId}/review`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  content: text,
+                  rate: rating.filter((v) => v).length,
+                }),
+              }
+            );
+            const data = await res.json();
+            console.log(data);
+
+            navigation.goBack();
+          }}
         />
       </View>
     </View>

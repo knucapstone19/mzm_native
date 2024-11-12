@@ -20,6 +20,8 @@ const SmallStoreItem = ({
   const halfCount = rating % 1 && 1;
   const emptyCount = 5 - intCount - halfCount;
 
+  // console.log(storeImage);
+
   return (
     <TouchableOpacity
       style={{
@@ -32,7 +34,11 @@ const SmallStoreItem = ({
       activeOpacity={0.9}
     >
       <Image
-        source={storeImage ?? require("../../assets/images/null_store.png")}
+        source={
+          storeImage
+            ? { uri: storeImage[0] }
+            : require("../../assets/images/null_store.png")
+        }
         className="w-[100px] h-[100px] rounded-md"
       />
       <View>
