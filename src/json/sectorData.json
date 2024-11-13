@@ -33,7 +33,7 @@
     "parts": [{ "text": "자신의 셀카를 업로드하고\n 닮은 음식을 알아보아요!" }],
     "src": "camera.png",
     "width": "66.66",
-    "target": "LookLike"
+    "target": "Looklike"
   },
   {
     "title": "음식 이상형 월드컵",

@@ -8,7 +8,6 @@ import {
   View,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopBar from "../components/TopBar";
 import MbtiQuestion from "../components/MbtiQuestion";
 import ContentButton from "../components/ContentButton";
@@ -61,27 +60,6 @@ const MbtiTestScreen = () => {
       }, 3000);
     });
   };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const token = await AsyncStorage.getItem("@user_token");
-  //     try {
-  //       const res = await fetch(`http://211.243.47.122:3005/mbti/history`, {
-  //         method: "GET",
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-
-  //       const data = await res.json();
-  //       console.log(data);
-  //     } catch (e) {
-  //       console.error(e.message);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     let isNotSelected = resArray.filter((res) => res === undefined).length;

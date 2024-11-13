@@ -13,6 +13,8 @@ import NomnScreen from "./screens/NomnScreen";
 import ListUpScreen from "./screens/ListUpScreen";
 import MbtiTestScreen from "./screens/MbtiTestScreen";
 import MbtiResScreen from "./screens/MbtiResScreen";
+import LooklikeScreen from "./screens/LooklikeScreen";
+import LooklikeResScreen from "./screens/LooklikeResScreen";
 import StoreDetailScreen from "./screens/StoreDetailScreen";
 import ReviewScreen from "./screens/ReviewScreen";
 import ProfileModScreen from "./screens/ProfileModScreen";
@@ -37,6 +39,8 @@ const App = () => {
           <Stack.Screen name="ListUp" component={ListUpScreen} />
           <Stack.Screen name="MbtiTest" component={MbtiTestScreen} />
           <Stack.Screen name="MbtiRes" component={MbtiResScreen} />
+          <Stack.Screen name="Looklike" component={LooklikeScreen} />
+          <Stack.Screen name="LooklikeRes" component={LooklikeResScreen} />
           <Stack.Screen name="StoreDetail" component={StoreDetailScreen} />
           <Stack.Screen name="Review" component={ReviewScreen} />
           <Stack.Screen name="ProfileMod" component={ProfileModScreen} />
