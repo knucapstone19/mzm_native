@@ -95,11 +95,13 @@ const ProfileSector = () => {
           <HistTabButton
             src={require("../../assets/images/3d/pin.png")}
             text="찜한 식당"
+            target="LikedStore"
           />
           <View className="h-6 border-[0.5px] border-[#D3D3D3]" />
           <HistTabButton
             src={require("../../assets/images/3d/review.png")}
             text="작성한 리뷰"
+            target="WrittenReview"
           />
         </View>
       </View>
