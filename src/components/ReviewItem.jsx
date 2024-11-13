@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FullStarIcon from "../../assets/images/icons/full_star.svg";
 import HalfStarIcon from "../../assets/images/icons/half_star.svg";
@@ -9,6 +10,7 @@ import styles from "../styles/styles";
 const ReviewItem = ({ content, createdAt, rates, storeId, userId }) => {
   const [store, setStore] = useState(null);
   const [date, setDate] = useState(null);
+  const navigation = useNavigation();
   const pastDate = new Date(createdAt);
   const currentDate = new Date();
 
@@ -61,7 +63,11 @@ const ReviewItem = ({ content, createdAt, rates, storeId, userId }) => {
   }, []);
 
   return (
-    <TouchableOpacity className="p-4 bg-white">
+    <TouchableOpacity
+      className="px-4 pt-[14px] pb-4 bg-white"
+      onPress={() => navigation.navigate("StoreDetail", { storeId })}
+      activeOpacity={0.8}
+    >
       <Text className={`mt-1 ${styles("16-text")} text-[#111111]`}>
         {store?.placeName}
       </Text>
@@ -81,7 +87,7 @@ const ReviewItem = ({ content, createdAt, rates, storeId, userId }) => {
           ))}
         </View>
         <Text className={`ml-1 ${styles("12-text")} text-[#A9A9A9]`}>
-          {date}
+          {date} 전
         </Text>
       </View>
       <Text className={`mt-4 ${styles("14-text")} text-[#383838]`}>

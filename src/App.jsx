@@ -18,6 +18,7 @@ import ReviewScreen from "./screens/ReviewScreen";
 import ProfileModScreen from "./screens/ProfileModScreen";
 import LikedStoreScreen from "./screens/LikedStoreScreen";
 import WrittenReviewScreen from "./screens/WrittenReviewScreen";
+import MbtiHistoryScreen from "./screens/MbtiHistoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ const App = () => {
           <Stack.Screen name="ProfileMod" component={ProfileModScreen} />
           <Stack.Screen name="LikedStore" component={LikedStoreScreen} />
           <Stack.Screen name="WrittenReview" component={WrittenReviewScreen} />
+          <Stack.Screen name="MbtiHistory" component={MbtiHistoryScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
