@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import getLikedStore from "../hooks/getLikedStore";
 import TopBar from "../components/TopBar";
