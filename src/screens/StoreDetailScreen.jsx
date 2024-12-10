@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import getStoreDetail from "../hooks/getStoreDetail";
@@ -20,7 +20,6 @@ const StoreDetailScreen = ({ route }) => {
   const [isLiked, setIsLiked] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [reviewArr, setReviewArr] = useState([]);
-  const [reviewSumm, setReviewSumm] = useState(null);
   const navigation = useNavigation();
 
   const handleToggle = () => {
@@ -37,92 +36,20 @@ const StoreDetailScreen = ({ route }) => {
 
       try {
         const res = await fetch(
-          `http://58.234.90.197:3005/store/${route.params.storeId}/review`
+          `http://58.234.90.197:3005/store/${route.params.storeId}/summary`
         );
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
         const data = await res.json();
-
-        let contentArr = [];
-        for (let v of data.content) {
-          contentArr.push(v.content);
-        }
-        setReviewArr(contentArr);
+        setReviewArr(data);
       } catch (e) {
         console.error("Error:", e.message);
       }
     };
     fetchData();
   }, []);
-
-  const isInitialRender = useRef(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`http://58.234.90.197:3005/contents/review`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            content: reviewArr,
-          }),
-        });
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        console.log(data);
-        setReviewSumm(data);
-      } catch (e) {
-        console.error("Error:", e.message);
-      }
-    };
-
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-    } else {
-      fetchData();
-    }
-
-    fetchData();
-  }, [reviewArr]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await fetch(`http://58.234.90.197:3005/contents/review`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           content: [
-  //             "분위기가 좋고 맛도 좋습니다.",
-  //             "분위기가 괜찮아요.",
-  //             "좋은 분위기 때문에 많이 와요.",
-  //             "식당 분위기가 좋습니다.",
-  //             "분위기 괜찮네요.",
-  //           ],
-  //         }),
-  //       });
-
-  //       if (!res.ok) {
-  //         throw new Error(`HTTP error! status: ${res.status}`);
-  //       }
-
-  //       const data = await res.json();
-  //       setReviewSumm(data);
-  //     } catch (e) {
-  //       console.error("Error:", e.message);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   useEffect(() => {
     const patchLiked = async () => {
@@ -254,7 +181,7 @@ const StoreDetailScreen = ({ route }) => {
                 <ReviewSummary
                   src={require("../../assets/images/3d/thumb-up.png")}
                   title="리뷰 요약"
-                  content={reviewSumm}
+                  content={reviewArr}
                 />
               </View>
             </View>

@@ -8,12 +8,12 @@ const ReviewSummary = ({ src, title, content }) => {
         <Image source={src} className="w-6 h-6" />
         <Text className={`${styles("main")} text-[#111111]`}>{title}</Text>
       </View>
-      <View className="p-4 border-[1px] border-[#D3D3D3] rounded-md">
-        <Text className={`${styles("16-text")} text-[#383838]`}>
-          {!content?.length
-            ? "리뷰가 많이 없어서 리뷰를 요약할 수 없습니다."
-            : content}
-        </Text>
+      <View className="space-y-2 p-4 border-[1px] border-[#D3D3D3] rounded-md">
+        {content.map((item, index) => (
+          <Text key={index} className={`${styles("16-text")} text-[#383838]`}>
+            {item}
+          </Text>
+        ))}
       </View>
     </View>
   );
