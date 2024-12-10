@@ -19,6 +19,7 @@ const StoreDetailScreen = ({ route }) => {
   const [store, setStore] = useState(null);
   const [isLiked, setIsLiked] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [reviewSumm, setReviewSumm] = useState(null);
   const navigation = useNavigation();
 
   const handleToggle = () => {
@@ -42,10 +43,10 @@ const StoreDetailScreen = ({ route }) => {
           body: JSON.stringify({
             content: [
               "분위기가 좋고 맛도 좋습니다.",
-              "양도 많고 사장님이 친절해요.",
-              "가끔 비위생적일 때가 있어요.",
-              "아이 데려오기 너무 좋아요.",
-              "주차 공간이 넓어서 편리해요.",
+              "분위기가 괜찮아요.",
+              "좋은 분위기 때문에 많이 와요.",
+              "식당 분위기가 좋습니다.",
+              "분위기 괜찮네요.",
             ],
           }),
         });
@@ -55,7 +56,7 @@ const StoreDetailScreen = ({ route }) => {
         }
 
         const data = await res.json();
-        console.log(data);
+        setReviewSumm(data);
       } catch (e) {
         console.error("Error:", e.message);
       }
@@ -192,13 +193,8 @@ const StoreDetailScreen = ({ route }) => {
               <View className="mt-2">
                 <ReviewSummary
                   src={require("../../assets/images/3d/thumb-up.png")}
-                  title="긍정 리뷰 요약"
-                  content="가격도 저렴한데 양도 많고 맛도 최고인 분식집이에요!"
-                />
-                <ReviewSummary
-                  src={require("../../assets/images/3d/thumb-down.png")}
-                  title="부정 리뷰 요약"
-                  content="분위기가 너무 시끄럽고 테이블이 좁아서 불편했어요."
+                  title="리뷰 요약"
+                  content={reviewSumm}
                 />
               </View>
             </View>

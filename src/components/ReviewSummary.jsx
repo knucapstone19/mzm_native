@@ -9,7 +9,11 @@ const ReviewSummary = ({ src, title, content }) => {
         <Text className={`${styles("main")} text-[#111111]`}>{title}</Text>
       </View>
       <View className="p-4 border-[1px] border-[#D3D3D3] rounded-md">
-        <Text className={`${styles("16-text")} text-[#383838]`}>{content}</Text>
+        <Text className={`${styles("16-text")} text-[#383838]`}>
+          {!content.length
+            ? "리뷰가 많이 없어서 리뷰를 요약할 수 없습니다."
+            : content}
+        </Text>
       </View>
     </View>
   );
