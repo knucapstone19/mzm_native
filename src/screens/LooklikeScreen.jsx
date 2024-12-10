@@ -39,7 +39,7 @@ const LooklikeScreen = () => {
           });
 
           const res = await fetch(
-            "http://211.243.47.122:3005/contents/predict",
+            "http://58.234.90.197:3005/contents/predict",
             {
               method: "POST",
               body: formData,

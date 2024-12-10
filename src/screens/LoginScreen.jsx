@@ -44,6 +44,12 @@ const LoginScreen = () => {
   let isNavigating = false;
   const checkNavigate = async (token) => {
     const data = await getUser(token);
+    try {
+      const userId = data.attributes.userId.toString();
+      await AsyncStorage.setItem("@user_id", userId);
+    } catch (error) {
+      console.error("AsyncStorage에 데이터 저장 실패:", error.message);
+    }
 
     try {
       if (!data?.user.school && token) {
@@ -138,9 +144,7 @@ const LoginScreen = () => {
           <TopBar isBack={true} handleBack={() => setShowWebview(false)} />
           <WebView
             source={{
-              uri: `http://${
-                regId === "google" ? "yoonnus.store" : "211.243.47.122"
-              }:3005/oauth2/authorization/${regId}`,
+              uri: `http://58.234.90.197:3005/oauth2/authorization/${regId}`,
             }}
             onNavigationStateChange={handleNavigate}
             startInLoadingState={true}

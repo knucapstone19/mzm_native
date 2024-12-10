@@ -34,7 +34,6 @@ const CardItem = ({
   };
 
   useEffect(() => {
-    console.log(storeImage);
     const fetchData = async () => {
       const data = await getLiked(storeId);
       setIsLiked(data);
@@ -49,6 +48,8 @@ const CardItem = ({
     };
     patchLiked();
   }, [isLiked, isLoading]);
+
+  console.log(category);
 
   return (
     <TouchableOpacity

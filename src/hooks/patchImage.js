@@ -10,7 +10,7 @@ const patchImage = async (prevUrl, url) => {
       name: "profile-image.jpg",
     });
 
-    const res = await fetch("http://211.243.47.122:3005/user/profile-image", {
+    const res = await fetch("http://58.234.90.197:3005/user/profile-image", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

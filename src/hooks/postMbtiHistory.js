@@ -4,7 +4,7 @@ const postMbtiHistory = async (resType) => {
   const token = await AsyncStorage.getItem("@user_token");
   try {
     const res = await fetch(
-      `http://211.243.47.122:3005/mbti/history?mbti=${resType}`,
+      `http://58.234.90.197:3005/mbti/history?mbti=${resType}`,
       {
         method: "POST",
         headers: {

@@ -4,7 +4,7 @@ const deleteLiked = async (storeId) => {
   try {
     const token = await AsyncStorage.getItem("@user_token");
     const res = await fetch(
-      `http://211.243.47.122:3005/store/${storeId}/liked`,
+      `http://58.234.90.197:3005/store/${storeId}/liked`,
       {
         method: "DELETE",
         headers: {

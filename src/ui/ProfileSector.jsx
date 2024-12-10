@@ -62,7 +62,7 @@ const ProfileSector = () => {
           ) : (
             <Animated.Image
               source={{
-                uri: `http://211.243.47.122:3005/user/profile-image?path=${profileData[0]}`,
+                uri: `http://58.234.90.197:3005/user/profile-image?path=${profileData[0]}`,
               }}
               style={{ opacity }}
               className="w-28 h-28 rounded-full"

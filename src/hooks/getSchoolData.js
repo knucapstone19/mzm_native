@@ -1,6 +1,6 @@
 const getSchoolData = async (setSchoolData) => {
   try {
-    const res = await fetch("http://211.243.47.122:3005/school");
+    const res = await fetch("http://58.234.90.197/school");
     const data = await res.json();
 
     setSchoolData(

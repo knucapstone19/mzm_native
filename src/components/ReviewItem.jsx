@@ -45,7 +45,7 @@ const ReviewItem = ({ content, createdAt, rates, storeId, userId }) => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem("@user_token");
-        const res = await fetch(`http://211.243.47.122:3005/store/${storeId}`, {
+        const res = await fetch(`http://58.234.90.197:3005/store/${storeId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

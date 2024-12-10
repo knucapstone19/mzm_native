@@ -15,7 +15,7 @@ const WrittenReviewScreen = () => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem("@user_token");
-        const res = await fetch(`http://211.243.47.122:3005/profiles/review`, {
+        const res = await fetch(`http://58.234.90.197:3005/profiles/review`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

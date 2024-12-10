@@ -18,17 +18,40 @@ const NomnScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await AsyncStorage.getItem("@user_token");
+      const userId = await AsyncStorage.getItem("@user_id");
+
       const data = await getUser(token);
       const location = [data?.user.school.lat, data?.user.school.lng];
 
-      let storeData = [];
-      for (let i = 1; i <= 5; i++) {
-        const randomPage = Math.floor(Math.random() * 3) + 1;
-        const randomIdx = Math.floor(Math.random() * 15);
-        const randomData = await getStore(location, randomPage);
-        storeData = [...storeData, randomData[randomIdx]];
+      try {
+        const response = await fetch(
+          `http://58.234.90.197:3005/recommend?latitude=${location[0]}&longitude=${location[1]}`,
+          {
+            method: "GET",
+            headers: {
+              "X-User-ID": userId.toString(),
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setStoreArray(data);
+        return data;
+      } catch (error) {
+        console.error("API 호출 에러:", error.message);
       }
-      setStoreArray(storeData);
+
+      // let storeData = [];
+      // for (let i = 1; i <= 5; i++) {
+      //   const randomPage = Math.floor(Math.random() * 3) + 1;
+      //   const randomIdx = Math.floor(Math.random() * 15);
+      //   const randomData = await getStore(location, randomPage);
+      //   storeData = [...storeData, randomData[randomIdx]];
+      // }
     };
     fetchData();
   }, []);
@@ -59,7 +82,6 @@ const NomnScreen = () => {
                   />
                 );
               }}
-              // containerStyle={{ bgColor: "black" }}
               cardStyle={{ height: "80%" }}
               backgroundColor={"#FAFAFA"}
               onSwipedAll={() => setIsAllSwiped(true)}

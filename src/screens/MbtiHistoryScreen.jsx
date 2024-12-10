@@ -15,7 +15,7 @@ const MbtiHistoryScreen = () => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem("@user_token");
-        const res = await fetch("http://211.243.47.122:3005/mbti/history", {
+        const res = await fetch("http://58.234.90.197:3005/mbti/history", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,

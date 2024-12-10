@@ -34,7 +34,7 @@ const StoreDetailScreen = ({ route }) => {
       setIsLiked(likedData);
 
       try {
-        const res = await fetch(`http://211.243.47.122:3005/contents/review`, {
+        const res = await fetch(`http://58.234.90.197:3005/contents/review`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

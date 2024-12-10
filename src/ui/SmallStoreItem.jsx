@@ -20,8 +20,6 @@ const SmallStoreItem = ({
   const halfCount = rating % 1 && 1;
   const emptyCount = 5 - intCount - halfCount;
 
-  // console.log(storeImage);
-
   return (
     <TouchableOpacity
       style={{

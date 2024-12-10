@@ -1,6 +1,6 @@
 const getUser = async (token) => {
   try {
-    const res = await fetch("http://211.243.47.122:3005/user", {
+    const res = await fetch("http://58.234.90.197:3005/user", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -8,7 +8,7 @@ const checkDuplicateName = async (
   if (userName !== profileData) {
     try {
       const res = await fetch(
-        `http://211.243.47.122:3005/user/duplicate-name?name=${userName}`
+        `http://58.234.90.197:3005/user/duplicate-name?name=${userName}`
       );
       isDuplicated = await res.json();
     } catch (e) {
