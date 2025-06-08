@@ -32,7 +32,7 @@
 </tr>
 <tr>
   <td>
-   <img src="https://github.com/user-attachments/assets/66e25e21-27b4-4d74-9de6-4117542effad">
+   <img src="https://github.com/user-attachments/assets/66e25e21-27b4-4d74-9de6-4117542effad" height="600px">
   </td>
 </tr>
 </tbody>
